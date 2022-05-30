@@ -2,11 +2,14 @@ import {
   Box, Button, Container, TextField, Typography,
 } from '@mui/material';
 import { MouseEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import * as io from 'socket.io-client';
 
 const socket = io.connect('http://localhost:3001');
 
 export default function Principal() {
+  const navigate = useNavigate();
+
   const [room, setRoom] = useState<string>('');
   const [username, setUsername] = useState<string>('');
 
@@ -14,6 +17,7 @@ export default function Principal() {
     event.preventDefault();
     if (username !== '' && room !== '') {
       socket.emit('join_room', room);
+      navigate(`/room/${room}`);
     }
   };
 
