@@ -2,6 +2,7 @@ import {
   Button, Container, TextField, Typography,
 } from '@mui/material';
 import {
+  useCallback,
   useContext, useEffect, useState,
 } from 'react';
 import Chat from 'components/Chat';
@@ -19,7 +20,7 @@ export interface IMessage {
 let messageId: number = 0;
 
 export default function Room() {
-  const { username, currentSocket: socket } = useContext(userContext);
+  const { username, socket } = useContext(userContext);
   const { id } = useParams();
 
   const [currentMessage, setCurrentMessage] = useState<string>('');
@@ -37,25 +38,29 @@ export default function Room() {
       };
       await socket.emit('send_message', messageData);
       setMessages((previousMessages) => [...previousMessages, messageData]);
+      setCurrentMessage('');
     }
   };
 
   useEffect(() => {
-    if (socket) {
-      socket.on('receive_message', (data: IMessage) => {
-        console.log(data);
-        // setMessages((previousMessages) => [...previousMessages, data]);
-      });
-    }
-  }, [socket]);
+    const handleMessages = (data: IMessage) => {
+      setMessages((oldMessages) => [...oldMessages, data]);
+    };
+
+    socket.on('receive_message', handleMessages);
+
+    return () => {
+      socket.off('receive_message', handleMessages);
+    };
+  }, []);
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h2">
+      <Typography variant="h3">
         {`Welcome to the room ${id}`}
       </Typography>
       <Chat username={username} messages={messages} />
-      <TextField label="write your message" onChange={(event) => setCurrentMessage(event.target.value)} />
+      <TextField value={currentMessage} label="write your message" onChange={(event) => setCurrentMessage(event.target.value)} />
       <Button variant="contained" onClick={() => sendMessage()}>
         Send
       </Button>
