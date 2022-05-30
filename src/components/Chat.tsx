@@ -15,18 +15,22 @@ export default function Chat({ messages, username }: IChat) {
       maxWidth={500}
     >
       {messages.map((item, index) => (
-        <Box
-          key={index}
-          display="flex"
-          p={1}
-          borderRadius={2}
-          alignItems="center"
-          alignSelf={username === item.author ? 'flex-start' : 'flex-end'}
-          sx={{ background: username === item.author ? 'green' : 'red', color: '#fff' }}
-        >
-          <Typography fontWeight="bold">{item.author}</Typography>
-          :
-          <Typography>{item.message}</Typography>
+        <Box alignSelf={username === item.author ? 'flex-start' : 'flex-end'}>
+          <Box
+            key={index}
+            display="flex"
+            p={1}
+            borderRadius={2}
+            maxWidth={125}
+            mb={1}
+            alignItems="center"
+            sx={{ background: username === item.author ? 'green' : 'red', color: '#fff' }}
+          >
+            <Typography>{item.message}</Typography>
+          </Box>
+          <Box display="flex" alignItems="center">
+            <Typography variant="caption" fontWeight="bold">{`${item.author} ${item.time}`}</Typography>
+          </Box>
         </Box>
       ))}
     </Stack>
