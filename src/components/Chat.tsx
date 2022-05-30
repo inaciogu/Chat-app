@@ -14,9 +14,9 @@ export default function Chat({ messages, username }: IChat) {
       p={5}
       maxWidth={500}
     >
-      {messages.map((item) => (
+      {messages.map((item, index) => (
         <Box
-          key={item.id}
+          key={index}
           display="flex"
           p={1}
           borderRadius={2}

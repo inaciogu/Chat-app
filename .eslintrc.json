@@ -27,6 +27,7 @@
         "no-use-before-define": 0,
         "react/prop-types": 0,
         "no-unused-vars": "off",
-        "react/jsx-no-constructed-context-values": "off"     
+        "react/jsx-no-constructed-context-values": "off",
+        "react/no-array-index-key": 0
     }
 }

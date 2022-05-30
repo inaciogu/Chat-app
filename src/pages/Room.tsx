@@ -10,14 +10,11 @@ import { userContext } from 'contexts/userContext';
 import { useParams } from 'react-router-dom';
 
 export interface IMessage {
-  id: number;
   room: string | undefined;
   author: string;
   time: string;
   message: string;
 }
-
-let messageId: number = 0;
 
 export default function Room() {
   const { username, socket } = useContext(userContext);
@@ -27,10 +24,8 @@ export default function Room() {
   const [messages, setMessages] = useState<IMessage[]>([]);
 
   const sendMessage = async () => {
-    messageId += 1;
     if (currentMessage !== '') {
       const messageData = {
-        id: messageId,
         room: id,
         message: currentMessage,
         author: username,
