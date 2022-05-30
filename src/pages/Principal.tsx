@@ -2,11 +2,14 @@ import {
   Box, Button, Container, TextField, Typography,
 } from '@mui/material';
 import { userContext } from 'contexts/userContext';
-import { MouseEvent, useContext, useState } from 'react';
+import {
+  MouseEvent, useContext, useEffect,
+  useState,
+} from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function Principal() {
-  const { handleUsername, currentSocket: socket } = useContext(userContext);
+  const { handleUsername, socket } = useContext(userContext);
   const navigate = useNavigate();
 
   const [room, setRoom] = useState<string>('');
@@ -23,7 +26,7 @@ export default function Principal() {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h1">
+      <Typography variant="h3">
         Select a room to join
       </Typography>
       <Box component="form">
