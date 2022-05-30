@@ -12,13 +12,17 @@ export default function Chat({ messages, username }: IChat) {
       border="1px solid black"
       borderRadius={2}
       p={5}
+      maxWidth={500}
     >
       {messages.map((item) => (
         <Box
           key={item.id}
           display="flex"
+          p={1}
+          borderRadius={2}
           alignItems="center"
           alignSelf={username === item.author ? 'flex-start' : 'flex-end'}
+          sx={{ background: username === item.author ? 'green' : 'red', color: '#fff' }}
         >
           <Typography fontWeight="bold">{item.author}</Typography>
           :
