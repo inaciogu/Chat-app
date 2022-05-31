@@ -2,6 +2,7 @@ import UserProvider from 'contexts/userContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
+import GlobalStyles from 'styles/global';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 
@@ -11,6 +12,7 @@ const root = ReactDOM.createRoot(
 root.render(
   <React.StrictMode>
     <BrowserRouter>
+      <GlobalStyles />
       <UserProvider>
         <App />
       </UserProvider>
