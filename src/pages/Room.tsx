@@ -1,13 +1,16 @@
 import {
-  Button, Container, TextField, Typography,
+  Box,
+  Button, Container, Stack, TextareaAutosize, TextField, Typography,
 } from '@mui/material';
 import {
+  KeyboardEvent,
   useCallback,
   useContext, useEffect, useState,
 } from 'react';
 import Chat from 'components/Chat';
 import { userContext } from 'contexts/userContext';
 import { useParams } from 'react-router-dom';
+import { SendSharp } from '@mui/icons-material';
 
 export interface IMessage {
   room: string | undefined;
@@ -37,6 +40,13 @@ export default function Room() {
     }
   };
 
+  const handleKeyDown = (event: KeyboardEvent) => {
+    if (event.code === 'Enter') {
+      event.preventDefault();
+      sendMessage();
+    }
+  };
+
   useEffect(() => {
     const handleMessages = (data: IMessage) => {
       setMessages((oldMessages) => [...oldMessages, data]);
@@ -51,14 +61,25 @@ export default function Room() {
 
   return (
     <Container maxWidth="lg">
-      <Typography variant="h3">
-        {`Welcome to the room ${id}`}
-      </Typography>
-      <Chat username={username} messages={messages} />
-      <TextField value={currentMessage} label="write your message" onChange={(event) => setCurrentMessage(event.target.value)} />
-      <Button variant="contained" onClick={() => sendMessage()}>
-        Send
-      </Button>
+      <Stack component="form" spacing={2}>
+        <Typography variant="h3">
+          {`Welcome to the room ${id}`}
+        </Typography>
+        <Chat username={username} messages={messages} />
+        <TextField
+          inputProps={{ onKeyDown: (event) => handleKeyDown(event) }}
+          label="type your message"
+          multiline
+          onChange={(event) => setCurrentMessage(event.target.value)}
+          value={currentMessage}
+          sx={{ maxWidth: 500 }}
+        />
+        <Box>
+          <Button type="submit" endIcon={<SendSharp />} variant="contained" onClick={() => sendMessage()}>
+            Send
+          </Button>
+        </Box>
+      </Stack>
     </Container>
   );
 }
