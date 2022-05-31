@@ -1,5 +1,5 @@
 import {
-  Box, Button, Container, TextField, Typography,
+  Box, Button, Container, MenuItem, Stack, TextField, Typography,
 } from '@mui/material';
 import { userContext } from 'contexts/userContext';
 import {
@@ -15,6 +15,25 @@ export default function Principal() {
   const [room, setRoom] = useState<string>('');
   const [username, setUsername] = useState<string>('');
 
+  const ROOMS = [
+    {
+      id: 1,
+      name: 'Games',
+    },
+    {
+      id: 2,
+      name: 'Work',
+    },
+    {
+      id: 3,
+      name: 'Help',
+    },
+    {
+      id: 4,
+      name: 'Meeting',
+    },
+  ];
+
   const joinRoom = (event: MouseEvent) => {
     event.preventDefault();
     if (username !== '' && room !== '') {
@@ -29,13 +48,19 @@ export default function Principal() {
       <Typography variant="h3">
         Select a room to join
       </Typography>
-      <Box component="form">
+      <Stack component="form" spacing={2}>
         <TextField onChange={(event) => setUsername(event.target.value)} label="Enter your username" />
-        <TextField onChange={(event) => setRoom(event.target.value)} label="Select a room" />
+        <TextField select onChange={(event) => setRoom(event.target.value)} label="Select a room">
+          {ROOMS.map((item) => (
+            <MenuItem key={item.id} value={item.name}>
+              {item.name}
+            </MenuItem>
+          ))}
+        </TextField>
         <Button onClick={(event) => joinRoom(event)} type="submit" variant="contained">
           join
         </Button>
-      </Box>
+      </Stack>
     </Container>
   );
 }

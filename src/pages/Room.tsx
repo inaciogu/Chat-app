@@ -4,6 +4,7 @@ import {
 } from '@mui/material';
 import {
   KeyboardEvent,
+  MouseEvent,
   useCallback,
   useContext, useEffect, useState,
 } from 'react';
@@ -40,13 +41,6 @@ export default function Room() {
     }
   };
 
-  const handleKeyDown = (event: KeyboardEvent) => {
-    if (event.code === 'Enter') {
-      event.preventDefault();
-      sendMessage();
-    }
-  };
-
   useEffect(() => {
     const handleMessages = (data: IMessage) => {
       setMessages((oldMessages) => [...oldMessages, data]);
@@ -67,7 +61,14 @@ export default function Room() {
         </Typography>
         <Chat username={username} messages={messages} />
         <TextField
-          inputProps={{ onKeyDown: (event) => handleKeyDown(event) }}
+          inputProps={{
+            onKeyDown: (event) => {
+              if (event.code === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+              }
+            },
+          }}
           label="type your message"
           multiline
           onChange={(event) => setCurrentMessage(event.target.value)}
@@ -75,7 +76,7 @@ export default function Room() {
           sx={{ maxWidth: 500 }}
         />
         <Box>
-          <Button type="submit" endIcon={<SendSharp />} variant="contained" onClick={() => sendMessage()}>
+          <Button endIcon={<SendSharp />} variant="contained" onClick={() => sendMessage()}>
             Send
           </Button>
         </Box>
