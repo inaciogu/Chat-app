@@ -20,13 +20,9 @@ export default function Chat({ messages, username }: IChat) {
           minWidth="10%"
           maxWidth="80%"
           mb={1}
-          display="flex"
-          flexDirection="column"
-          overflow="hidden"
-          flexWrap="wrap"
           alignSelf={username === item.author ? 'flex-start' : 'flex-end'}
           sx={{
-            background: username === item.author ? 'green' : 'red', color: '#fff', p: 1, borderRadius: 2,
+            background: username === item.author ? 'green' : 'red', color: '#fff', p: 1, borderRadius: 2, wordWrap: 'break-word',
           }}
         >
           {item.message}
