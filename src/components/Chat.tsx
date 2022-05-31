@@ -17,6 +17,8 @@ export default function Chat({ messages, username }: IChat) {
       {messages.map((item, index) => (
         <Typography
           key={index}
+          display="flex"
+          flexDirection="column"
           minWidth="10%"
           maxWidth="80%"
           mb={1}
