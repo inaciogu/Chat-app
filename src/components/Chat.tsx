@@ -11,27 +11,27 @@ export default function Chat({ messages, username }: IChat) {
     <Stack
       border="1px solid black"
       borderRadius={2}
-      p={5}
+      p={3}
       maxWidth={500}
     >
       {messages.map((item, index) => (
-        <Box alignSelf={username === item.author ? 'flex-start' : 'flex-end'}>
-          <Box
-            key={index}
-            display="flex"
-            p={1}
-            borderRadius={2}
-            maxWidth={125}
-            mb={1}
-            alignItems="center"
-            sx={{ background: username === item.author ? 'green' : 'red', color: '#fff' }}
-          >
-            <Typography>{item.message}</Typography>
-          </Box>
-          <Box display="flex" alignItems="center">
-            <Typography variant="caption" fontWeight="bold">{`${item.author} ${item.time}`}</Typography>
-          </Box>
-        </Box>
+        <Typography
+          key={index}
+          minWidth="10%"
+          maxWidth="80%"
+          mb={1}
+          display="flex"
+          flexDirection="column"
+          overflow="hidden"
+          flexWrap="wrap"
+          alignSelf={username === item.author ? 'flex-start' : 'flex-end'}
+          sx={{
+            background: username === item.author ? 'green' : 'red', color: '#fff', p: 1, borderRadius: 2,
+          }}
+        >
+          {item.message}
+          <Typography variant="subtitle2" alignSelf="flex-end">{item.time}</Typography>
+        </Typography>
       ))}
     </Stack>
   );
