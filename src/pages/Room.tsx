@@ -12,6 +12,7 @@ import Chat from 'components/Chat';
 import { userContext } from 'contexts/userContext';
 import { useParams } from 'react-router-dom';
 import { SendSharp } from '@mui/icons-material';
+import { RootStyle } from './Principal';
 
 export interface IMessage {
   room: string | undefined;
@@ -54,10 +55,10 @@ export default function Room() {
   }, []);
 
   return (
-    <Container maxWidth="lg">
-      <Stack component="form" spacing={2}>
+    <RootStyle>
+      <Stack boxShadow={5} borderRadius={3} p={5} component="form" spacing={2}>
         <Typography variant="h3">
-          {`Welcome to the room ${id}`}
+          {`Welcome to ${id}`}
         </Typography>
         <Chat username={username} messages={messages} />
         <TextField
@@ -81,6 +82,6 @@ export default function Room() {
           </Button>
         </Box>
       </Stack>
-    </Container>
+    </RootStyle>
   );
 }
