@@ -9,6 +9,18 @@ export default function GlobalStyles() {
           margin: 0,
           padding: 0,
           boxSizing: 'border-box',
+          '::-webkit-scrollbar': {
+            width: 8,
+            height: 12,
+          },
+          '::-webkit-scrollbar-track': {
+            background: 'grey',
+            borderRadius: 6,
+          },
+          '::-webkit-scrollbar-thumb': {
+            background: '#222',
+            borderRadius: 6,
+          },
         },
         html: {
           width: '100%',
