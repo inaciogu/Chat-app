@@ -15,7 +15,7 @@ interface IUserProvider {
 
 export const userContext = createContext({} as TUserContext);
 
-const socket = io.connect('http://192.168.0.103:3001', { reconnection: false });
+const socket = io.connect('https://socket-chatapi.herokuapp.com/', { reconnection: false });
 
 export default function UserProvider({ children }: IUserProvider) {
   const [username, setUsername] = useState<string>('');
