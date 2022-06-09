@@ -1,11 +1,11 @@
 import {
   Box,
-  Button, Container, Stack, TextareaAutosize, TextField, Typography,
+  Button, Container, Stack, TextField, Typography,
 } from '@mui/material';
+
+import { format } from 'date-fns';
+
 import {
-  KeyboardEvent,
-  MouseEvent,
-  useCallback,
   useContext, useEffect, useState,
 } from 'react';
 import Chat from 'components/Chat';
@@ -21,6 +21,8 @@ export interface IMessage {
   message: string;
 }
 
+const CURRENT_DATE = new Date(Date.now());
+
 export default function Room() {
   const { username, socket } = useContext(userContext);
   const { id } = useParams();
@@ -34,7 +36,7 @@ export default function Room() {
         room: id,
         message: currentMessage,
         author: username,
-        time: `${new Date(Date.now()).getHours()}:${new Date(Date.now()).getMinutes()}`,
+        time: format(CURRENT_DATE, 'HH:mm'),
       };
       await socket.emit('send_message', messageData);
       setMessages((previousMessages) => [...previousMessages, messageData]);
