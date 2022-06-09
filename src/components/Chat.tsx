@@ -1,6 +1,7 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { IMessage } from 'pages/Room';
 import { useLayoutEffect, useRef } from 'react';
+import MessageItem from './MessageItem';
 
 interface IChat {
   username: string;
@@ -28,21 +29,13 @@ export default function Chat({ messages, username }: IChat) {
       }}
     >
       {messages.map((item, index) => (
-        <Typography
+        <MessageItem
           key={index}
-          display="flex"
-          flexDirection="column"
-          minWidth="10%"
-          maxWidth="80%"
-          mb={1}
-          alignSelf={username === item.author ? 'flex-start' : 'flex-end'}
-          sx={{
-            background: username === item.author ? 'green' : 'red', color: '#fff', p: 1, borderRadius: 2, wordWrap: 'break-word',
-          }}
-        >
-          {item.message}
-          <Typography variant="subtitle2" alignSelf="flex-end">{item.time}</Typography>
-        </Typography>
+          author={item.author}
+          message={item.message}
+          time={item.time}
+          username={username}
+        />
       ))}
     </Stack>
   );
