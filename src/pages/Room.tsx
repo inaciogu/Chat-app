@@ -58,30 +58,35 @@ export default function Room() {
 
   return (
     <RootStyle>
-      <Stack boxShadow={5} borderRadius={3} p={5} component="form" spacing={2}>
-        <Typography variant="h3">
+      <Stack width="80%" height="80%" boxShadow={5} borderRadius={3} p={5} component="form" spacing={2}>
+        <Typography alignSelf="center" variant="h4">
           {`Welcome to ${id}`}
         </Typography>
         <Chat username={username} messages={messages} />
-        <TextField
-          inputProps={{
-            onKeyDown: (event) => {
-              if (event.code === 'Enter') {
-                event.preventDefault();
-                sendMessage();
-              }
-            },
-          }}
-          label="type your message"
-          multiline
-          onChange={(event) => setCurrentMessage(event.target.value)}
-          value={currentMessage}
-          sx={{ maxWidth: 500 }}
-        />
-        <Box>
-          <Button endIcon={<SendSharp />} variant="contained" onClick={() => sendMessage()}>
+        <Box display="flex" alignItems="center">
+          <TextField
+            inputProps={{
+              onKeyDown: (event) => {
+                if (event.code === 'Enter') {
+                  event.preventDefault();
+                  sendMessage();
+                }
+              },
+            }}
+            label="type your message"
+            multiline
+            onChange={(event) => setCurrentMessage(event.target.value)}
+            value={currentMessage}
+            fullWidth
+            sx={{ mr: 1 }}
+          />
+
+          {
+            /* <Button
+            sx={{ py: 1.8 }}
+            endIcon={<SendSharp />} variant="contained" onClick={() => sendMessage()}>
             Send
-          </Button>
+          </Button> */}
         </Box>
       </Stack>
     </RootStyle>

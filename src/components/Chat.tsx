@@ -22,8 +22,8 @@ export default function Chat({ messages, username }: IChat) {
       ref={chatBoxRef}
       borderRadius={2}
       p={3}
-      maxWidth={500}
-      maxHeight={250}
+      width="100%"
+      height="100%"
       sx={{
         overflowY: 'auto',
       }}
