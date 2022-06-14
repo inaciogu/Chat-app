@@ -15,7 +15,7 @@ export default function MessageItem({
   return (
     <Box display="flex">
       <Avatar variant="rounded" src="/" alt={author} />
-      <Stack mx={1}>
+      <Stack width="100%" mx={1}>
         <Box display="flex" alignItems="center">
           <Typography alignSelf="flex-start" fontWeight="bold" mr={1}>{username === author ? 'Me' : author}</Typography>
           <Typography alignSelf="center" variant="caption">{time}</Typography>
@@ -23,8 +23,7 @@ export default function MessageItem({
         <Typography
           sx={{
             wordWrap: 'break-word',
-            minWidth: '10%',
-            maxWidth: '80%',
+            maxWidth: '90%',
             mb: 1,
           }}
         >

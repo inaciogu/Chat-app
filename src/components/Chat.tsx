@@ -18,7 +18,8 @@ export default function Chat({ messages, username }: IChat) {
 
   return (
     <Stack
-      border="1px solid black"
+      border="1px solid grey"
+      boxShadow={5}
       ref={chatBoxRef}
       borderRadius={2}
       p={3}
