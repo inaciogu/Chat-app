@@ -64,13 +64,13 @@ export default function Principal() {
         height="100%"
       />
       <Box display="flex" alignItems="center" flexDirection="column" justifyContent="center" width="100%">
-        <Typography variant="h3">Welcome to the chatapp</Typography>
+        <Typography textAlign="center" variant="h3">Welcome to the chatapp</Typography>
         <Card sx={{
           display: 'flex', flexDirection: 'column', alignItems: 'center', width: '90%', p: 5, boxShadow: 5,
         }}
         >
           <Stack width="100%" height="100%" p={2} justifyContent="center" alignItems="center" component="form" spacing={5}>
-            <Typography variant="h4">
+            <Typography textAlign="center" variant="h4">
               Select a room to join
             </Typography>
             <TextField onChange={(event) => setUsername(event.target.value)} label="Enter your username" fullWidth />
