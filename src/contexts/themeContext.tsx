@@ -11,10 +11,10 @@ type ThemeProviderProps = {
   children: ReactNode;
 }
 
-const ThemeContext = createContext<ThemeContextProps>({} as ThemeContextProps);
+export const ThemeContext = createContext<ThemeContextProps>({} as ThemeContextProps);
 
 export default function ThemeProvider({ children }: ThemeProviderProps) {
-  const [themeMode, setThemeMode] = useState<ThemeMode>('light');
+  const [themeMode, setThemeMode] = useState<ThemeMode>('dark');
 
   return (
     <ThemeContext.Provider value={{ themeMode, setThemeMode }}>

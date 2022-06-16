@@ -1,3 +1,4 @@
+import ThemeProvider from 'contexts/themeContext';
 import UserProvider from 'contexts/userContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
@@ -11,12 +12,13 @@ const root = ReactDOM.createRoot(
 );
 root.render(
   <React.StrictMode>
-    <BrowserRouter>
-      <GlobalStyles />
-      <UserProvider>
-        <App />
-      </UserProvider>
-    </BrowserRouter>
+    <ThemeProvider>
+      <BrowserRouter>
+        <UserProvider>
+          <App />
+        </UserProvider>
+      </BrowserRouter>
+    </ThemeProvider>
   </React.StrictMode>,
 );
 
