@@ -104,7 +104,7 @@ export default function Room() {
         value={currentMessage}
         sx={{ mt: 2 }}
       />
-      <Drawer variant="temporary" anchor="left" open={open} onClose={() => setOpen(false)}>
+      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
         <Box sx={{ p: 2, width: 250 }}>
           <List>
             <ListItem sx={{ display: 'flex', flexDirection: 'column' }}>
@@ -114,8 +114,8 @@ export default function Room() {
                   <DarkMode />
                 </IconButton>
                 <Divider flexItem orientation="vertical" />
-                <IconButton>
-                  <LightMode onClick={() => setThemeMode('light')} />
+                <IconButton onClick={() => setThemeMode('light')}>
+                  <LightMode />
                 </IconButton>
               </Box>
             </ListItem>
