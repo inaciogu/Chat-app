@@ -113,6 +113,7 @@ export default function Room() {
                 <IconButton onClick={() => setThemeMode('dark')}>
                   <DarkMode />
                 </IconButton>
+                <Divider flexItem orientation="vertical" />
                 <IconButton>
                   <LightMode onClick={() => setThemeMode('light')} />
                 </IconButton>
