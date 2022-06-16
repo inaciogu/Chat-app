@@ -1,5 +1,16 @@
 import {
-  InputAdornment, Stack, styled, TextField, Typography,
+  InputAdornment,
+  Drawer,
+  styled,
+  TextField,
+  Typography,
+  List,
+  Button,
+  ListItem,
+  IconButton,
+  Box,
+  ListItemText,
+  Divider,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -10,7 +21,8 @@ import {
 import Chat from 'components/Chat';
 import { userContext } from 'contexts/UserContext';
 import { useParams } from 'react-router-dom';
-import { SendSharp } from '@mui/icons-material';
+import { DarkMode, LightMode, SendSharp } from '@mui/icons-material';
+import { ThemeContext } from 'contexts/ThemeContext';
 
 export interface IMessage {
   room: string | undefined;
@@ -31,10 +43,12 @@ const RoomStyle = styled('section')(() => ({
 
 export default function Room() {
   const { username, socket } = useContext(userContext);
+  const { setThemeMode } = useContext(ThemeContext);
   const { id } = useParams();
 
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
 
   const sendMessage = () => {
     if (currentMessage.trim()) {
@@ -67,6 +81,7 @@ export default function Room() {
       <Typography alignSelf="center" variant="h4">
         {`Welcome to ${id}`}
       </Typography>
+      <Button onClick={() => setOpen(true)}>Open</Button>
       <Chat username={username} messages={messages} />
       <TextField
         inputProps={{
@@ -89,6 +104,24 @@ export default function Room() {
         value={currentMessage}
         sx={{ mt: 2 }}
       />
+      <Drawer variant="temporary" anchor="left" open={open} onClose={() => setOpen(false)}>
+        <Box sx={{ p: 2, width: 250 }}>
+          <List>
+            <ListItem sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Typography fontWeight="bold">Theme</Typography>
+              <Box width="100%" display="flex" alignItems="center" justifyContent="space-around">
+                <IconButton onClick={() => setThemeMode('dark')}>
+                  <DarkMode />
+                </IconButton>
+                <IconButton>
+                  <LightMode onClick={() => setThemeMode('light')} />
+                </IconButton>
+              </Box>
+            </ListItem>
+            <Divider />
+          </List>
+        </Box>
+      </Drawer>
     </RoomStyle>
   );
 }
