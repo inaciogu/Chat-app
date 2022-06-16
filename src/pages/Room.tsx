@@ -1,6 +1,5 @@
 import {
-  Box,
-  Button, Container, InputAdornment, Stack, styled, TextField, Typography,
+  InputAdornment, Stack, styled, TextField, Typography,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -9,7 +8,7 @@ import {
   useContext, useEffect, useState,
 } from 'react';
 import Chat from 'components/Chat';
-import { userContext } from 'contexts/userContext';
+import { userContext } from 'contexts/UserContext';
 import { useParams } from 'react-router-dom';
 import { SendSharp } from '@mui/icons-material';
 

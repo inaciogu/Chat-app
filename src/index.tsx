@@ -1,9 +1,8 @@
-import ThemeProvider from 'contexts/themeContext';
-import UserProvider from 'contexts/userContext';
+import ThemeProvider from 'contexts/ThemeContext';
+import UserProvider from 'contexts/UserContext';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { BrowserRouter } from 'react-router-dom';
-import GlobalStyles from 'styles/global';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
 

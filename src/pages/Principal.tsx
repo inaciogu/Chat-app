@@ -1,9 +1,9 @@
 import {
   Box, Button, Card, Container, MenuItem, Stack, styled, TextField, Typography,
 } from '@mui/material';
-import { userContext } from 'contexts/userContext';
+import { userContext } from 'contexts/UserContext';
 import {
-  MouseEvent, useContext, useEffect,
+  MouseEvent, useContext,
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
