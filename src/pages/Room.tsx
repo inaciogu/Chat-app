@@ -5,11 +5,9 @@ import {
   TextField,
   Typography,
   List,
-  Button,
   ListItem,
   IconButton,
   Box,
-  ListItemText,
   Divider,
 } from '@mui/material';
 
@@ -21,7 +19,12 @@ import {
 import Chat from 'components/Chat';
 import { userContext } from 'contexts/UserContext';
 import { useParams } from 'react-router-dom';
-import { DarkMode, LightMode, SendSharp } from '@mui/icons-material';
+import {
+  DarkMode,
+  LightMode,
+  SendSharp,
+  Settings,
+} from '@mui/icons-material';
 import { ThemeContext } from 'contexts/ThemeContext';
 
 export interface IMessage {
@@ -78,10 +81,16 @@ export default function Room() {
 
   return (
     <RoomStyle>
-      <Typography alignSelf="center" variant="h4">
-        {`Welcome to ${id}`}
-      </Typography>
-      <Button onClick={() => setOpen(true)}>Open</Button>
+      <Box>
+        <Box display="flex" alignItems="center" justifySelf="center" justifyContent="space-between">
+          <Typography alignSelf="center" variant="h4">
+            {`Welcome to ${id}`}
+          </Typography>
+          <IconButton onClick={() => setOpen(true)}>
+            <Settings />
+          </IconButton>
+        </Box>
+      </Box>
       <Chat username={username} messages={messages} />
       <TextField
         inputProps={{
