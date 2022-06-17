@@ -1,6 +1,14 @@
 import {
+  InputAdornment,
+  Drawer,
+  styled,
+  TextField,
+  Typography,
+  List,
+  ListItem,
+  IconButton,
   Box,
-  Button, Container, InputAdornment, Stack, styled, TextField, Typography,
+  Divider,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -9,9 +17,15 @@ import {
   useContext, useEffect, useState,
 } from 'react';
 import Chat from 'components/Chat';
-import { userContext } from 'contexts/userContext';
+import { userContext } from 'contexts/UserContext';
 import { useParams } from 'react-router-dom';
-import { SendSharp } from '@mui/icons-material';
+import {
+  DarkMode,
+  LightMode,
+  SendSharp,
+  Settings,
+} from '@mui/icons-material';
+import { ThemeContext } from 'contexts/ThemeContext';
 
 export interface IMessage {
   room: string | undefined;
@@ -32,10 +46,12 @@ const RoomStyle = styled('section')(() => ({
 
 export default function Room() {
   const { username, socket } = useContext(userContext);
+  const { setThemeMode } = useContext(ThemeContext);
   const { id } = useParams();
 
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [open, setOpen] = useState<boolean>(false);
 
   const sendMessage = () => {
     if (currentMessage.trim()) {
@@ -65,9 +81,16 @@ export default function Room() {
 
   return (
     <RoomStyle>
-      <Typography alignSelf="center" variant="h4">
-        {`Welcome to ${id}`}
-      </Typography>
+      <Box>
+        <Box display="flex" alignItems="center" justifySelf="center" justifyContent="space-between">
+          <Typography alignSelf="center" variant="h4">
+            {`Welcome to ${id}`}
+          </Typography>
+          <IconButton onClick={() => setOpen(true)}>
+            <Settings />
+          </IconButton>
+        </Box>
+      </Box>
       <Chat username={username} messages={messages} />
       <TextField
         inputProps={{
@@ -90,6 +113,25 @@ export default function Room() {
         value={currentMessage}
         sx={{ mt: 2 }}
       />
+      <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
+        <Box sx={{ p: 2, width: 250 }}>
+          <List>
+            <ListItem sx={{ display: 'flex', flexDirection: 'column' }}>
+              <Typography fontWeight="bold">Theme</Typography>
+              <Box width="100%" display="flex" alignItems="center" justifyContent="space-around">
+                <IconButton onClick={() => setThemeMode('dark')}>
+                  <DarkMode />
+                </IconButton>
+                <Divider flexItem orientation="vertical" />
+                <IconButton onClick={() => setThemeMode('light')}>
+                  <LightMode />
+                </IconButton>
+              </Box>
+            </ListItem>
+            <Divider />
+          </List>
+        </Box>
+      </Drawer>
     </RoomStyle>
   );
 }

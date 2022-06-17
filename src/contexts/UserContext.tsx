@@ -1,5 +1,5 @@
 import {
-  createContext, ReactNode, useState, useEffect,
+  createContext, ReactNode, useState,
 } from 'react';
 import * as io from 'socket.io-client';
 
