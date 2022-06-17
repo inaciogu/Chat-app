@@ -5,11 +5,12 @@ import { ReactNode } from 'react';
 interface IRoomItem {
   room: string;
   icon: ReactNode;
+  changeRoom: (room: string) => void;
 }
 
-export default function RoomItem({ room, icon }: IRoomItem) {
+export default function RoomItem({ room, icon, changeRoom }: IRoomItem) {
   return (
-    <ListItemButton>
+    <ListItemButton onClick={() => changeRoom(room)}>
       <ListItemIcon>
         {icon}
       </ListItemIcon>

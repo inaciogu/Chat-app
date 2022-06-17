@@ -21,7 +21,7 @@ import {
 } from 'react';
 import Chat from 'components/Chat';
 import { userContext } from 'contexts/UserContext';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
   DarkMode,
   Gamepad,
@@ -53,6 +53,7 @@ export default function Room() {
   const { username, socket, rooms } = useContext(userContext);
   const { setThemeMode } = useContext(ThemeContext);
   const { id } = useParams();
+  const navigate = useNavigate();
 
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [messages, setMessages] = useState<IMessage[]>([]);
@@ -70,6 +71,13 @@ export default function Room() {
       setMessages((previousMessages) => [...previousMessages, messageData]);
       setCurrentMessage(' ');
     }
+  };
+
+  const changeRoom = (room: string) => {
+    socket.emit('change_room', id, room);
+    navigate(`/room/${room}`);
+    setOpen(false);
+    setMessages([]);
   };
 
   useEffect(() => {
@@ -125,7 +133,12 @@ export default function Room() {
               <Typography fontWeight="bold">Rooms</Typography>
               <Box width="100%" display="flex" flexDirection="column">
                 {rooms.map((room) => (
-                  <RoomItem key={room.id} room={room.name} icon={room.icon} />
+                  <RoomItem
+                    key={room.id}
+                    room={room.name}
+                    icon={room.icon}
+                    changeRoom={changeRoom}
+                  />
                 ))}
               </Box>
             </ListItem>
