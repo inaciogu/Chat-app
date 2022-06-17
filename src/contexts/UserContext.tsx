@@ -1,4 +1,9 @@
 import {
+  Gamepad, Help, MeetingRoom,
+  SvgIconComponent,
+  WorkOff,
+} from '@mui/icons-material';
+import {
   createContext, ReactNode, useState,
 } from 'react';
 import * as io from 'socket.io-client';
@@ -6,6 +11,7 @@ import * as io from 'socket.io-client';
 interface IRoom {
   id: number;
   name: string;
+  icon: ReactNode;
 }
 
 type TUserContext = {
@@ -23,18 +29,22 @@ const INITIAL_ROOMS = [
   {
     id: 1,
     name: 'Games',
+    icon: <Gamepad />,
   },
   {
     id: 2,
     name: 'Work',
+    icon: <WorkOff />,
   },
   {
     id: 3,
     name: 'Help',
+    icon: <Help />,
   },
   {
     id: 4,
     name: 'Meeting',
+    icon: <MeetingRoom />,
   },
 ];
 

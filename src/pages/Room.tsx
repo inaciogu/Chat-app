@@ -9,6 +9,9 @@ import {
   IconButton,
   Box,
   Divider,
+  ListItemIcon,
+  ListItemText,
+  ListItemButton,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -21,11 +24,13 @@ import { userContext } from 'contexts/UserContext';
 import { useParams } from 'react-router-dom';
 import {
   DarkMode,
+  Gamepad,
   LightMode,
   SendSharp,
   Settings,
 } from '@mui/icons-material';
 import { ThemeContext } from 'contexts/ThemeContext';
+import RoomItem from 'components/RoomItem';
 
 export interface IMessage {
   room: string | undefined;
@@ -45,7 +50,7 @@ const RoomStyle = styled('section')(() => ({
 }));
 
 export default function Room() {
-  const { username, socket } = useContext(userContext);
+  const { username, socket, rooms } = useContext(userContext);
   const { setThemeMode } = useContext(ThemeContext);
   const { id } = useParams();
 
@@ -116,7 +121,16 @@ export default function Room() {
       <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
         <Box sx={{ p: 2, width: 250 }}>
           <List>
-            <ListItem sx={{ display: 'flex', flexDirection: 'column' }}>
+            <ListItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
+              <Typography fontWeight="bold">Rooms</Typography>
+              <Box width="100%" display="flex" flexDirection="column">
+                {rooms.map((room) => (
+                  <RoomItem key={room.id} room={room.name} icon={room.icon} />
+                ))}
+              </Box>
+            </ListItem>
+            <Divider />
+            <ListItem sx={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start' }}>
               <Typography fontWeight="bold">Theme</Typography>
               <Box width="100%" display="flex" alignItems="center" justifyContent="space-around">
                 <IconButton onClick={() => setThemeMode('dark')}>
@@ -128,7 +142,6 @@ export default function Room() {
                 </IconButton>
               </Box>
             </ListItem>
-            <Divider />
           </List>
         </Box>
       </Drawer>
