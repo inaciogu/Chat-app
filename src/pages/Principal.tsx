@@ -18,30 +18,11 @@ export const RootStyle = styled('main')(({ theme }) => ({
 }));
 
 export default function Principal() {
-  const { handleUsername, socket } = useContext(userContext);
+  const { handleUsername, socket, rooms } = useContext(userContext);
   const navigate = useNavigate();
 
   const [room, setRoom] = useState<string>('');
   const [username, setUsername] = useState<string>('');
-
-  const ROOMS = [
-    {
-      id: 1,
-      name: 'Games',
-    },
-    {
-      id: 2,
-      name: 'Work',
-    },
-    {
-      id: 3,
-      name: 'Help',
-    },
-    {
-      id: 4,
-      name: 'Meeting',
-    },
-  ];
 
   const joinRoom = (event: MouseEvent) => {
     event.preventDefault();
@@ -74,8 +55,8 @@ export default function Principal() {
               Select a room to join
             </Typography>
             <TextField onChange={(event) => setUsername(event.target.value)} label="Enter your username" fullWidth />
-            <TextField select onChange={(event) => setRoom(event.target.value)} label="Select a room" fullWidth>
-              {ROOMS.map((item) => (
+            <TextField value={room} select onChange={(event) => setRoom(event.target.value)} label="Select a room" fullWidth>
+              {rooms.map((item) => (
                 <MenuItem key={item.id} value={item.name}>
                   {item.name}
                 </MenuItem>
