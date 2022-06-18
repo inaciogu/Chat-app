@@ -1,9 +1,9 @@
 import {
-  Box, Button, Card, Container, MenuItem, Stack, styled, TextField, Typography,
+  Box, Button, Card, MenuItem, Stack, styled, TextField, Typography,
 } from '@mui/material';
-import { userContext } from 'contexts/UserContext';
+import useAccount from 'hooks/useAccount';
 import {
-  MouseEvent, useContext,
+  MouseEvent,
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
@@ -18,7 +18,7 @@ export const RootStyle = styled('main')(({ theme }) => ({
 }));
 
 export default function Principal() {
-  const { handleUsername, socket, rooms } = useContext(userContext);
+  const { handleUsername, socket, rooms } = useAccount();
   const navigate = useNavigate();
 
   const [room, setRoom] = useState<string>('');

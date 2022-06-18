@@ -9,9 +9,6 @@ import {
   IconButton,
   Box,
   Divider,
-  ListItemIcon,
-  ListItemText,
-  ListItemButton,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -20,11 +17,9 @@ import {
   useContext, useEffect, useState,
 } from 'react';
 import Chat from 'components/Chat';
-import { userContext } from 'contexts/UserContext';
 import { useNavigate, useParams } from 'react-router-dom';
 import {
   DarkMode,
-  Gamepad,
   LightMode,
   SendSharp,
   Settings,
@@ -32,6 +27,7 @@ import {
 import { ThemeContext } from 'contexts/ThemeContext';
 import RoomItem from 'components/RoomItem';
 import UserPopover from 'components/UserPopover';
+import useAccount from 'hooks/useAccount';
 
 export interface IMessage {
   room: string | undefined;
@@ -51,7 +47,7 @@ const RoomStyle = styled('section')(() => ({
 }));
 
 export default function Room() {
-  const { username, socket, rooms } = useContext(userContext);
+  const { username, socket, rooms } = useAccount();
   const { setThemeMode } = useContext(ThemeContext);
   const { id } = useParams();
   const navigate = useNavigate();

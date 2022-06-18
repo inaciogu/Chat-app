@@ -1,4 +1,3 @@
-import { SvgIconComponent } from '@mui/icons-material';
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
 import { ReactNode } from 'react';
 
