@@ -31,6 +31,7 @@ import {
 } from '@mui/icons-material';
 import { ThemeContext } from 'contexts/ThemeContext';
 import RoomItem from 'components/RoomItem';
+import UserPopover from 'components/UserPopover';
 
 export interface IMessage {
   room: string | undefined;
@@ -99,9 +100,12 @@ export default function Room() {
           <Typography alignSelf="center" variant="h4">
             {`Welcome to ${id}`}
           </Typography>
-          <IconButton onClick={() => setOpen(true)}>
-            <Settings />
-          </IconButton>
+          <Box display="flex" alignItems="center">
+            <UserPopover />
+            <IconButton onClick={() => setOpen(true)}>
+              <Settings />
+            </IconButton>
+          </Box>
         </Box>
       </Box>
       <Chat username={username} messages={messages} />
