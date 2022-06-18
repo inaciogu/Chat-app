@@ -9,6 +9,7 @@ import {
   IconButton,
   Box,
   Divider,
+  Stack,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -93,9 +94,11 @@ export default function Room() {
     <RoomStyle>
       <Box>
         <Box display="flex" alignItems="center" justifySelf="center" justifyContent="space-between">
-          <Typography alignSelf="center" variant="h4">
-            {`Welcome to ${id}`}
-          </Typography>
+          <Stack width="100%">
+            <Typography alignSelf="center" variant="h4">
+              {`# ${id}`}
+            </Typography>
+          </Stack>
           <Box display="flex" alignItems="center">
             <UserPopover />
             <IconButton onClick={() => setOpen(true)}>
