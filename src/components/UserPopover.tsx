@@ -5,17 +5,21 @@ import {
 } from '@mui/material';
 import useAccount from 'hooks/useAccount';
 import { useLayoutEffect, useRef, useState } from 'react';
-import { Navigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 
 export default function UserPopover() {
   const { username } = useAccount();
+  const navigate = useNavigate();
+
   const anchorRef = useRef(null);
   const avatarRef = useRef<HTMLDivElement>({} as HTMLDivElement);
 
   const [open, setOpen] = useState<boolean>(false);
   const [variant, setVariant] = useState<any>('circular');
 
-  const logout = () => <Navigate to="/" replace />;
+  const logout = () => {
+    navigate('/');
+  };
 
   useLayoutEffect(() => {
     avatarRef.current.onmouseenter = () => {
@@ -34,7 +38,7 @@ export default function UserPopover() {
         onClick={() => setOpen(true)}
         sx={{ mr: 2 }}
       >
-        <Avatar ref={avatarRef} variant={variant} alt={username} sx={{ transition: 'ease-in 200ms' }} />
+        <Avatar src="/" ref={avatarRef} variant={variant} alt={username} sx={{ transition: 'ease-in 200ms' }} />
       </IconButton>
       <Popover anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} anchorEl={anchorRef?.current} open={open} onClose={() => setOpen(false)}>
         <Card>
