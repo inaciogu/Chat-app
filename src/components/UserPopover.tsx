@@ -34,7 +34,7 @@ export default function UserPopover() {
         onClick={() => setOpen(true)}
         sx={{ mr: 2 }}
       >
-        <Avatar ref={avatarRef} variant={variant} alt={username} />
+        <Avatar ref={avatarRef} variant={variant} alt={username} sx={{ transition: 'ease-in 200ms' }} />
       </IconButton>
       <Popover anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} anchorEl={anchorRef?.current} open={open} onClose={() => setOpen(false)}>
         <Card>
