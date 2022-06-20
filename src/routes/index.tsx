@@ -1,5 +1,5 @@
 import LoadingScreen from 'components/loadingScreen';
-import React, { lazy, Suspense } from 'react';
+import { lazy, Suspense } from 'react';
 import { useRoutes } from 'react-router-dom';
 
 export default function Router() {
