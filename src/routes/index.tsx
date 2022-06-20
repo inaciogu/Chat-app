@@ -1,17 +1,23 @@
-import { lazy } from 'react';
+import LoadingScreen from 'components/loadingScreen';
+import React, { lazy, Suspense } from 'react';
 import { useRoutes } from 'react-router-dom';
 
 export default function Router() {
-  return useRoutes([
-    {
-      path: '/',
-      element: <Principal />,
-    },
-    {
-      path: 'room/:id',
-      element: <Room />,
-    },
-  ]);
+  return (
+    <Suspense fallback={<LoadingScreen />}>
+      {useRoutes([
+        {
+          path: '/',
+          element: <Principal />,
+        },
+        {
+          path: 'room/:id',
+          element: <Room />,
+        },
+      ])}
+      ;
+    </Suspense>
+  );
 }
 
 const Principal = lazy(() => import('../pages/Principal'));
