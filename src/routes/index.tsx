@@ -1,6 +1,5 @@
+import { lazy } from 'react';
 import { useRoutes } from 'react-router-dom';
-import Principal from 'pages/Principal';
-import Room from 'pages/Room';
 
 export default function Router() {
   return useRoutes([
@@ -14,3 +13,6 @@ export default function Router() {
     },
   ]);
 }
+
+const Principal = lazy(() => import('../pages/Principal'));
+const Room = lazy(() => import('../pages/Room'));
