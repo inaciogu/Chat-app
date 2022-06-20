@@ -10,6 +10,7 @@ import {
   Box,
   Divider,
   Stack,
+  Container,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -29,6 +30,7 @@ import { ThemeContext } from 'contexts/ThemeContext';
 import RoomItem from 'components/RoomItem';
 import UserPopover from 'components/UserPopover';
 import useAccount from 'hooks/useAccount';
+import NavBar from 'components/NavBar';
 
 export interface IMessage {
   room: string | undefined;
@@ -42,9 +44,8 @@ const CURRENT_DATE = new Date(Date.now());
 const RoomStyle = styled('section')(() => ({
   display: 'flex',
   flexDirection: 'column',
+  width: '100%',
   height: '100%',
-  justifyContent: 'space-between',
-  padding: 5,
 }));
 
 export default function Room() {
@@ -92,43 +93,31 @@ export default function Room() {
 
   return (
     <RoomStyle>
-      <Box>
-        <Box display="flex" alignItems="center" justifySelf="center" justifyContent="space-between">
-          <Stack width="100%">
-            <Typography alignSelf="center" variant="h4">
-              {`# ${id}`}
-            </Typography>
-          </Stack>
-          <Box display="flex" alignItems="center">
-            <UserPopover />
-            <IconButton onClick={() => setOpen(true)}>
-              <Settings />
-            </IconButton>
-          </Box>
-        </Box>
-      </Box>
-      <Chat username={username} messages={messages} />
-      <TextField
-        inputProps={{
-          onKeyDown: (event) => {
-            if (event.code === 'Enter') {
-              event.preventDefault();
-              sendMessage();
-            }
-          },
-        }}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="start">
-              <SendSharp color={currentMessage.trim() ? 'primary' : 'inherit'} onClick={() => sendMessage()} />
-            </InputAdornment>),
-        }}
-        label="type your message"
-        multiline
-        onChange={(event) => setCurrentMessage(event.target.value)}
-        value={currentMessage}
-        sx={{ mt: 2 }}
-      />
+      <NavBar id={id} onClick={() => setOpen(true)} />
+      <Stack height="100%" p={2}>
+        <Chat username={username} messages={messages} />
+        <TextField
+          inputProps={{
+            onKeyDown: (event) => {
+              if (event.code === 'Enter') {
+                event.preventDefault();
+                sendMessage();
+              }
+            },
+          }}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="start">
+                <SendSharp color={currentMessage.trim() ? 'primary' : 'inherit'} onClick={() => sendMessage()} />
+              </InputAdornment>),
+          }}
+          label="Type something..."
+          multiline
+          onChange={(event) => setCurrentMessage(event.target.value)}
+          value={currentMessage}
+          sx={{ mt: 2 }}
+        />
+      </Stack>
       <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
         <Box sx={{ p: 2, width: 250 }}>
           <List>
