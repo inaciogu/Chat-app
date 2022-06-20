@@ -1,7 +1,6 @@
 import {
   Gamepad, Help, MeetingRoom,
-  SvgIconComponent,
-  WorkOff,
+  Work,
 } from '@mui/icons-material';
 import {
   createContext, ReactNode, useState,
@@ -34,7 +33,7 @@ const INITIAL_ROOMS = [
   {
     id: 2,
     name: 'Work',
-    icon: <WorkOff />,
+    icon: <Work />,
   },
   {
     id: 3,
