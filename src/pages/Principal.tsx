@@ -10,7 +10,7 @@ import { useNavigate } from 'react-router-dom';
 
 import manInComputer from '../assets/manInComputer.jpg';
 
-export const RootStyle = styled('main')(({ theme }) => ({
+export const RootStyle = styled('main')(() => ({
   height: '100%',
   display: 'flex',
   alignItems: 'center',
