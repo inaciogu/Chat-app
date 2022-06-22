@@ -41,6 +41,7 @@ export default function Principal() {
         }
         component="img"
         src={manInComputer}
+        loading="lazy"
         width="50%"
         height="100%"
       />

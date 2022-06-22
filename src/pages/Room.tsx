@@ -31,6 +31,7 @@ import RoomItem from 'components/RoomItem';
 import UserPopover from 'components/UserPopover';
 import useAccount from 'hooks/useAccount';
 import NavBar from 'components/NavBar';
+import { GET_MESSAGES, NEW_MESSAGE } from 'services/messages.service';
 
 export interface IMessage {
   room: string | undefined;
@@ -58,7 +59,7 @@ export default function Room() {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [open, setOpen] = useState<boolean>(false);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (currentMessage.trim()) {
       const messageData = {
         room: id,
@@ -69,6 +70,8 @@ export default function Room() {
       socket.emit('send_message', messageData);
       setMessages((previousMessages) => [...previousMessages, messageData]);
       setCurrentMessage(' ');
+      const response = await NEW_MESSAGE({ ...messageData, date: '21-06-2022' });
+      console.log(response);
     }
   };
 
@@ -78,6 +81,18 @@ export default function Room() {
     setOpen(false);
     setMessages([]);
   };
+
+  useEffect(() => {
+    const getLatestMessages = async () => {
+      try {
+        const { data } = await GET_MESSAGES(id || '');
+        console.log(data);
+      } catch (error) {
+        console.log(error);
+      }
+    };
+    getLatestMessages();
+  }, []);
 
   useEffect(() => {
     const handleMessages = (data: IMessage) => {
