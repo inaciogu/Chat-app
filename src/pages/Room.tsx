@@ -126,9 +126,8 @@ export default function Room() {
               <Box width="100%" display="flex" flexDirection="column">
                 {rooms.map((room) => (
                   <RoomItem
-                    key={room.id}
+                    key={room._id}
                     room={room.name}
-                    icon={room.icon}
                     changeRoom={changeRoom}
                   />
                 ))}
