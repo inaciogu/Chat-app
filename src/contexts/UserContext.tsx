@@ -8,7 +8,7 @@ import {
 import { GET_ROOMS } from 'services/rooms.service';
 import * as io from 'socket.io-client';
 
-interface IRoom {
+export interface IRoom {
   _id: number;
   name: string;
 }

@@ -31,6 +31,8 @@ import RoomItem from 'components/RoomItem';
 import UserPopover from 'components/UserPopover';
 import useAccount from 'hooks/useAccount';
 import NavBar from 'components/NavBar';
+import { GET_ONE_ROOM } from 'services/rooms.service';
+import { IRoom } from 'contexts/UserContext';
 
 export interface IMessage {
   room: string | undefined;
@@ -55,6 +57,7 @@ export default function Room() {
   const navigate = useNavigate();
 
   const [currentMessage, setCurrentMessage] = useState<string>('');
+  const [currentRoom, setCurrentRoom] = useState<IRoom>({} as IRoom);
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [open, setOpen] = useState<boolean>(false);
 
@@ -80,6 +83,18 @@ export default function Room() {
   };
 
   useEffect(() => {
+    const getCurrentRoom = async () => {
+      try {
+        const { data } = await GET_ONE_ROOM(id);
+        setCurrentRoom(data);
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    };
+    getCurrentRoom();
+  }, [id]);
+
+  useEffect(() => {
     const handleMessages = (data: IMessage) => {
       setMessages((oldMessages) => [...oldMessages, data]);
     };
@@ -93,7 +108,7 @@ export default function Room() {
 
   return (
     <RoomStyle>
-      <NavBar id={id} onClick={() => setOpen(true)} />
+      <NavBar id={currentRoom.name} onClick={() => setOpen(true)} />
       <Stack height="100%" p={2}>
         <Chat username={username} messages={messages} />
         <TextField
