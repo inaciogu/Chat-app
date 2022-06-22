@@ -142,7 +142,7 @@ export default function Room() {
                 {rooms.map((room) => (
                   <RoomItem
                     key={room._id}
-                    room={room.name}
+                    room={room}
                     changeRoom={changeRoom}
                   />
                 ))}
