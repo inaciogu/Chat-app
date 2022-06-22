@@ -57,7 +57,7 @@ export default function Principal() {
             <TextField onChange={(event) => setUsername(event.target.value)} label="Enter your username" fullWidth />
             <TextField value={room} select onChange={(event) => setRoom(event.target.value)} label="Select a room" fullWidth>
               {rooms.map((item) => (
-                <MenuItem key={item._id} value={item.name}>
+                <MenuItem key={item._id} value={item._id}>
                   {item.name}
                 </MenuItem>
               ))}
