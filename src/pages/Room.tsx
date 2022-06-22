@@ -33,6 +33,7 @@ import useAccount from 'hooks/useAccount';
 import NavBar from 'components/NavBar';
 import { GET_ONE_ROOM } from 'services/rooms.service';
 import { IRoom } from 'contexts/UserContext';
+import { NEW_MESSAGE } from 'services/messages.service';
 
 export interface IMessage {
   room: string | undefined;
@@ -61,15 +62,19 @@ export default function Room() {
   const [messages, setMessages] = useState<IMessage[]>([]);
   const [open, setOpen] = useState<boolean>(false);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (currentMessage.trim()) {
       const messageData = {
-        room: id,
+        room: id || '',
         message: currentMessage,
         author: username,
         time: format(CURRENT_DATE, 'HH:mm'),
       };
       socket.emit('send_message', messageData);
+      await NEW_MESSAGE({
+        ...messageData,
+        date: format(CURRENT_DATE, 'dd/MM/yyyy'),
+      });
       setMessages((previousMessages) => [...previousMessages, messageData]);
       setCurrentMessage(' ');
     }
