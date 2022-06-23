@@ -33,7 +33,7 @@ import useAccount from 'hooks/useAccount';
 import NavBar from 'components/NavBar';
 import { GET_ONE_ROOM } from 'services/rooms.service';
 import { IRoom } from 'contexts/UserContext';
-import { NEW_MESSAGE } from 'services/messages.service';
+import { GET_MESSAGES, NEW_MESSAGE } from 'services/messages.service';
 
 export interface IMessage {
   room: string | undefined;
@@ -97,6 +97,18 @@ export default function Room() {
       }
     };
     getCurrentRoom();
+  }, [id]);
+
+  useEffect(() => {
+    const getLatestMessages = async () => {
+      try {
+        const { data } = await GET_MESSAGES(id || '');
+        setMessages(data);
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    };
+    getLatestMessages();
   }, [id]);
 
   useEffect(() => {
