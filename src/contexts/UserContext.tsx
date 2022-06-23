@@ -3,14 +3,14 @@ import {
   Work,
 } from '@mui/icons-material';
 import {
-  createContext, ReactNode, useState,
+  createContext, ReactNode, useEffect, useState,
 } from 'react';
+import { GET_ROOMS } from 'services/rooms.service';
 import * as io from 'socket.io-client';
 
-interface IRoom {
-  id: number;
+export interface IRoom {
+  _id: string;
   name: string;
-  icon: ReactNode;
 }
 
 type TUserContext = {
@@ -24,40 +24,29 @@ interface IUserProvider {
   children: ReactNode
 }
 
-const INITIAL_ROOMS = [
-  {
-    id: 1,
-    name: 'Games',
-    icon: <Gamepad />,
-  },
-  {
-    id: 2,
-    name: 'Work',
-    icon: <Work />,
-  },
-  {
-    id: 3,
-    name: 'Help',
-    icon: <Help />,
-  },
-  {
-    id: 4,
-    name: 'Meeting',
-    icon: <MeetingRoom />,
-  },
-];
-
 export const userContext = createContext({} as TUserContext);
 
 const socket = io.connect('https://socket-chatapi.herokuapp.com/', { reconnection: false, transports: ['websocket'] });
 
 export default function UserProvider({ children }: IUserProvider) {
   const [username, setUsername] = useState<string>('');
-  const [rooms, setRooms] = useState<IRoom[]>(INITIAL_ROOMS);
+  const [rooms, setRooms] = useState<IRoom[]>([]);
 
   const handleUsername = (value: string) => {
     setUsername(value);
   };
+
+  useEffect(() => {
+    const getAvailableRooms = async () => {
+      try {
+        const { data } = await GET_ROOMS();
+        setRooms(data);
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    };
+    getAvailableRooms();
+  }, []);
 
   return (
     <userContext.Provider value={{
