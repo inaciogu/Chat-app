@@ -1,7 +1,8 @@
 import { Box, Stack, Typography } from '@mui/material';
 import { IMessage } from 'pages/Room';
 import { useLayoutEffect, useRef } from 'react';
-import MessageItem from './MessageItem';
+import MessageItem from '../MessageItem';
+import MessageSkeleton from './MessageSkeleton';
 
 interface IChat {
   username: string;
@@ -29,7 +30,8 @@ export default function Chat({ messages, username }: IChat) {
         overflowY: 'auto',
       }}
     >
-      {messages.map((item, index) => (
+      <MessageSkeleton />
+      {/* {messages.map((item, index) => (
         <MessageItem
           key={index}
           author={item.author}
@@ -37,7 +39,7 @@ export default function Chat({ messages, username }: IChat) {
           time={item.time}
           username={username}
         />
-      ))}
+      ))} */}
     </Stack>
   );
 }
