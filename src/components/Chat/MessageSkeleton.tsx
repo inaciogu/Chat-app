@@ -4,7 +4,7 @@ import {
 
 export default function MessageSkeleton() {
   return (
-    <Box display="flex">
+    <Box display="flex" my={1}>
       <Skeleton width={40} height={40} variant="rectangular" sx={{ borderRadius: 1 }} />
       <Stack mx={1} width="100%">
         <Box display="flex" alignItems="center">

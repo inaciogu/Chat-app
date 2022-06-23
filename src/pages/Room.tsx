@@ -60,6 +60,7 @@ export default function Room() {
   const [currentMessage, setCurrentMessage] = useState<string>('');
   const [currentRoom, setCurrentRoom] = useState<IRoom>({} as IRoom);
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
   const sendMessage = async () => {
@@ -101,11 +102,14 @@ export default function Room() {
 
   useEffect(() => {
     const getLatestMessages = async () => {
+      setLoading(true);
       try {
         const { data } = await GET_MESSAGES(id || '');
         setMessages(data);
       } catch (error: any) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     getLatestMessages();
@@ -127,7 +131,7 @@ export default function Room() {
     <RoomStyle>
       <NavBar id={currentRoom.name} onClick={() => setOpen(true)} />
       <Stack height="100%" p={2}>
-        <Chat username={username} messages={messages} />
+        <Chat username={username} loading={loading} messages={messages} />
         <TextField
           inputProps={{
             onKeyDown: (event) => {
