@@ -30,6 +30,9 @@ export default function Principal() {
       socket.emit('join_room', room);
       handleUsername(username);
       navigate(`/room/${room}`);
+      if (socket.disconnected) {
+        socket.connect();
+      }
     }
   };
 
