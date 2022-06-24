@@ -1,20 +1,17 @@
 import { ListItemButton, ListItemIcon, ListItemText } from '@mui/material';
+import { IRoom } from 'contexts/UserContext';
 import { ReactNode } from 'react';
 
 interface IRoomItem {
-  room: string;
-  icon: ReactNode;
+  room: IRoom;
   changeRoom: (room: string) => void;
 }
 
-export default function RoomItem({ room, icon, changeRoom }: IRoomItem) {
+export default function RoomItem({ room, changeRoom }: IRoomItem) {
   return (
-    <ListItemButton onClick={() => changeRoom(room)}>
-      <ListItemIcon>
-        {icon}
-      </ListItemIcon>
+    <ListItemButton onClick={() => changeRoom(room._id)}>
       <ListItemText>
-        {room}
+        {room.name}
       </ListItemText>
     </ListItemButton>
   );

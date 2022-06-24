@@ -31,6 +31,9 @@ import RoomItem from 'components/RoomItem';
 import UserPopover from 'components/UserPopover';
 import useAccount from 'hooks/useAccount';
 import NavBar from 'components/NavBar';
+import { GET_ONE_ROOM } from 'services/rooms.service';
+import { IRoom } from 'contexts/UserContext';
+import { GET_MESSAGES, NEW_MESSAGE } from 'services/messages.service';
 
 export interface IMessage {
   room: string | undefined;
@@ -55,18 +58,24 @@ export default function Room() {
   const navigate = useNavigate();
 
   const [currentMessage, setCurrentMessage] = useState<string>('');
+  const [currentRoom, setCurrentRoom] = useState<IRoom>({} as IRoom);
   const [messages, setMessages] = useState<IMessage[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
   const [open, setOpen] = useState<boolean>(false);
 
-  const sendMessage = () => {
+  const sendMessage = async () => {
     if (currentMessage.trim()) {
       const messageData = {
-        room: id,
+        room: id || '',
         message: currentMessage,
         author: username,
         time: format(CURRENT_DATE, 'HH:mm'),
       };
       socket.emit('send_message', messageData);
+      await NEW_MESSAGE({
+        ...messageData,
+        date: format(CURRENT_DATE, 'dd/MM/yyyy'),
+      });
       setMessages((previousMessages) => [...previousMessages, messageData]);
       setCurrentMessage(' ');
     }
@@ -78,6 +87,33 @@ export default function Room() {
     setOpen(false);
     setMessages([]);
   };
+
+  useEffect(() => {
+    const getCurrentRoom = async () => {
+      try {
+        const { data } = await GET_ONE_ROOM(id);
+        setCurrentRoom(data);
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    };
+    getCurrentRoom();
+  }, [id]);
+
+  useEffect(() => {
+    const getLatestMessages = async () => {
+      setLoading(true);
+      try {
+        const { data } = await GET_MESSAGES(id || '');
+        setMessages(data);
+      } catch (error: any) {
+        console.log(error.message);
+      } finally {
+        setLoading(false);
+      }
+    };
+    getLatestMessages();
+  }, [id]);
 
   useEffect(() => {
     const handleMessages = (data: IMessage) => {
@@ -93,9 +129,9 @@ export default function Room() {
 
   return (
     <RoomStyle>
-      <NavBar id={id} onClick={() => setOpen(true)} />
+      <NavBar id={currentRoom.name} onClick={() => setOpen(true)} />
       <Stack height="100%" p={2}>
-        <Chat username={username} messages={messages} />
+        <Chat username={username} loading={loading} messages={messages} />
         <TextField
           inputProps={{
             onKeyDown: (event) => {
@@ -126,9 +162,8 @@ export default function Room() {
               <Box width="100%" display="flex" flexDirection="column">
                 {rooms.map((room) => (
                   <RoomItem
-                    key={room.id}
-                    room={room.name}
-                    icon={room.icon}
+                    key={room._id}
+                    room={room}
                     changeRoom={changeRoom}
                   />
                 ))}
