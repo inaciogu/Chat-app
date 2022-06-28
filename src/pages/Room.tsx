@@ -90,11 +90,14 @@ export default function Room() {
 
   useEffect(() => {
     const getCurrentRoom = async () => {
+      setLoading(true);
       try {
         const { data } = await GET_ONE_ROOM(id);
         setCurrentRoom(data);
       } catch (error: any) {
         console.log(error.message);
+      } finally {
+        setLoading(false);
       }
     };
     getCurrentRoom();
@@ -129,7 +132,7 @@ export default function Room() {
 
   return (
     <RoomStyle>
-      <NavBar id={currentRoom.name} onClick={() => setOpen(true)} />
+      <NavBar loading={loading} id={currentRoom.name} onClick={() => setOpen(true)} />
       <Stack height="100%" p={2}>
         <Chat username={username} loading={loading} messages={messages} />
         <TextField
