@@ -5,6 +5,7 @@ import {
 import {
   createContext, ReactNode, useEffect, useState,
 } from 'react';
+import { TUserRegister } from 'services/auth.service';
 import { GET_ROOMS } from 'services/rooms.service';
 import * as io from 'socket.io-client';
 
@@ -20,6 +21,8 @@ type TUserContext = {
   rooms: IRoom[]
 }
 
+export type TUser = Omit<TUserRegister, 'password'>;
+
 interface IUserProvider {
   children: ReactNode
 }
@@ -30,6 +33,7 @@ const socket = io.connect(process.env.REACT_APP_API_URL || '', { reconnection: t
 
 export default function UserProvider({ children }: IUserProvider) {
   const [username, setUsername] = useState<string>('');
+  const [user, setUser] = useState<TUser | null>(null);
   const [rooms, setRooms] = useState<IRoom[]>([]);
 
   const handleUsername = (value: string) => {
