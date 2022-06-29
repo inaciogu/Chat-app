@@ -17,7 +17,7 @@ type TUserContext = {
   rooms: IRoom[]
 }
 
-export type TUser = Omit<TUserResponse, 'password'> | null;
+export type TUser = TUserResponse | null;
 
 interface IUserProvider {
   children: ReactNode
