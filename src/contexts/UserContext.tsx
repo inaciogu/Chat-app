@@ -4,6 +4,7 @@ import {
 import { LOGIN, TUserLogin, TUserResponse } from 'services/auth.service';
 import { GET_ROOMS } from 'services/rooms.service';
 import * as io from 'socket.io-client';
+import isValidToken from 'utils/jwt';
 import {
   EActionTypes,
   TAuthAction, TAuthState, TUser,
@@ -15,6 +16,9 @@ export interface IRoom {
 }
 
 type TUserContext = {
+  user: TUser;
+  isAuthenticated: boolean;
+  isInitialized: boolean;
   username: string;
   socket: io.Socket;
   handleUsername: (username: string) => void;
@@ -125,15 +129,35 @@ export default function UserProvider({ children }: IUserProvider) {
     getAvailableRooms();
   }, []);
 
-  /* useEffect(() => {
+  useEffect(() => {
     const initialization = () => {
-      const user = getStoredUser();
-   }
- }); */
+      const token = localStorage.getItem('token');
+
+      if (token && isValidToken(token)) {
+        const user = getStoredUser();
+        dispatch({
+          type: EActionTypes.Initial,
+          payload: {
+            isAuthenticated: true,
+            user,
+          },
+        });
+      } else {
+        dispatch({
+          type: EActionTypes.Initial,
+          payload: {
+            isAuthenticated: false,
+            user: null,
+          },
+        });
+      }
+    };
+    initialization();
+  });
 
   return (
     <userContext.Provider value={{
-      handleUsername, username, socket, rooms, login, logout, handleUser,
+      handleUsername, ...state, username, socket, rooms, login, logout, handleUser,
     }}
     >
       {children}
