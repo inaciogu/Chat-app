@@ -17,7 +17,7 @@ type TUserContext = {
   rooms: IRoom[]
 }
 
-export type TUser = Omit<TUserResponse, 'password'>;
+export type TUser = Omit<TUserResponse, 'password'> | null;
 
 interface IUserProvider {
   children: ReactNode
@@ -117,6 +117,17 @@ export default function UserProvider({ children }: IUserProvider) {
 
     handleUser(user);
     localStorage.setItem('token', JSON.stringify(token));
+  };
+
+  const logout = () => {
+    dispatch({
+      type: EActionTypes.Logout,
+      payload: {
+        ...state,
+        isAuthenticated: false,
+        user: null,
+      },
+    });
   };
 
   return (
