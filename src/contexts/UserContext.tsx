@@ -1,7 +1,7 @@
 import {
   createContext, ReactNode, useEffect, useReducer, useState,
 } from 'react';
-import { LOGIN, TUserLogin, TUserRegister } from 'services/auth.service';
+import { LOGIN, TUserLogin, TUserResponse } from 'services/auth.service';
 import { GET_ROOMS } from 'services/rooms.service';
 import * as io from 'socket.io-client';
 
@@ -17,7 +17,7 @@ type TUserContext = {
   rooms: IRoom[]
 }
 
-export type TUser = Omit<TUserRegister, 'password'>;
+export type TUser = Omit<TUserResponse, 'password'>;
 
 interface IUserProvider {
   children: ReactNode
@@ -87,6 +87,18 @@ export default function UserProvider({ children }: IUserProvider) {
     setUsername(value);
   };
 
+  const handleUser = (currentUser: TUserResponse) => {
+    dispatch({
+      type: EActionTypes.Login,
+      payload: {
+        ...state,
+        user: currentUser,
+      },
+    });
+
+    localStorage.setItem('user', JSON.stringify(currentUser));
+  };
+
   useEffect(() => {
     const getAvailableRooms = async () => {
       try {
@@ -99,9 +111,13 @@ export default function UserProvider({ children }: IUserProvider) {
     getAvailableRooms();
   }, []);
 
-  /* const login = async (body: TUserLogin) => {
+  const login = async (body: TUserLogin) => {
     const { data } = await LOGIN(body);
-  } */
+    const { user, token } = data;
+
+    handleUser(user);
+    localStorage.setItem('token', JSON.stringify(token));
+  };
 
   return (
     <userContext.Provider value={{
