@@ -91,18 +91,6 @@ export default function UserProvider({ children }: IUserProvider) {
     localStorage.setItem('user', JSON.stringify(currentUser));
   };
 
-  useEffect(() => {
-    const getAvailableRooms = async () => {
-      try {
-        const { data } = await GET_ROOMS();
-        setRooms(data);
-      } catch (error: any) {
-        console.log(error.message);
-      }
-    };
-    getAvailableRooms();
-  }, []);
-
   const login = async (body: TUserLogin) => {
     const { data } = await LOGIN(body);
     const { user, token } = data;
@@ -121,6 +109,34 @@ export default function UserProvider({ children }: IUserProvider) {
       },
     });
   };
+
+  const getStoredUser = () => {
+    const storedUser = localStorage.getItem('user');
+
+    if (storedUser) {
+      const parsedUser = JSON.parse(storedUser);
+      return parsedUser;
+    }
+    return null;
+  };
+
+  useEffect(() => {
+    const getAvailableRooms = async () => {
+      try {
+        const { data } = await GET_ROOMS();
+        setRooms(data);
+      } catch (error: any) {
+        console.log(error.message);
+      }
+    };
+    getAvailableRooms();
+  }, []);
+
+  /*  useEffect(() => {
+    const initialization = () => {
+
+    }
+  }); */
 
   return (
     <userContext.Provider value={{
