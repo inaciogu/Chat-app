@@ -4,6 +4,7 @@ import {
 import { LOGIN, TUserLogin, TUserResponse } from 'services/auth.service';
 import { GET_ROOMS } from 'services/rooms.service';
 import * as io from 'socket.io-client';
+import { EActionTypes, TAuthState } from '../@types/auth';
 
 export interface IRoom {
   _id: string;
@@ -26,24 +27,12 @@ interface IUserProvider {
   children: ReactNode
 }
 
-enum EActionTypes {
-  Initial = 'INITIAL',
-  Login = 'LOGIN',
-  Logout = 'LOGOUT'
-}
-
 type TAuthAction = {
   type: EActionTypes;
   payload: {
     isAuthenticated: boolean;
     user: TUser
   }
-}
-
-type TAuthState = {
-  isAuthenticated: boolean;
-  isInitialized: boolean;
-  user: TUser | null;
 }
 
 const initialState: TAuthState = {
