@@ -4,7 +4,10 @@ import {
 import { LOGIN, TUserLogin, TUserResponse } from 'services/auth.service';
 import { GET_ROOMS } from 'services/rooms.service';
 import * as io from 'socket.io-client';
-import { EActionTypes, TAuthState } from '../@types/auth';
+import {
+  EActionTypes,
+  TAuthAction, TAuthState, TUser,
+} from '../@types/auth';
 
 export interface IRoom {
   _id: string;
@@ -21,18 +24,8 @@ type TUserContext = {
   rooms: IRoom[]
 }
 
-export type TUser = TUserResponse | null;
-
 interface IUserProvider {
   children: ReactNode
-}
-
-type TAuthAction = {
-  type: EActionTypes;
-  payload: {
-    isAuthenticated: boolean;
-    user: TUser
-  }
 }
 
 const initialState: TAuthState = {
@@ -132,11 +125,11 @@ export default function UserProvider({ children }: IUserProvider) {
     getAvailableRooms();
   }, []);
 
-  /*  useEffect(() => {
+  /* useEffect(() => {
     const initialization = () => {
-
-    }
-  }); */
+      const user = getStoredUser();
+   }
+ }); */
 
   return (
     <userContext.Provider value={{
