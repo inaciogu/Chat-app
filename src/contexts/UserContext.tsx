@@ -14,6 +14,9 @@ type TUserContext = {
   username: string;
   socket: io.Socket;
   handleUsername: (username: string) => void;
+  login: (body: TUserLogin) => void;
+  logout: () => void;
+  handleUser: (currentUser: TUser) => void;
   rooms: IRoom[]
 }
 
@@ -87,7 +90,7 @@ export default function UserProvider({ children }: IUserProvider) {
     setUsername(value);
   };
 
-  const handleUser = (currentUser: TUserResponse) => {
+  const handleUser = (currentUser: TUser) => {
     dispatch({
       type: EActionTypes.Login,
       payload: {
@@ -132,7 +135,7 @@ export default function UserProvider({ children }: IUserProvider) {
 
   return (
     <userContext.Provider value={{
-      handleUsername, username, socket, rooms,
+      handleUsername, username, socket, rooms, login, logout, handleUser,
     }}
     >
       {children}
