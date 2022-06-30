@@ -1,7 +1,7 @@
 import { Stack } from '@mui/material';
 import { IMessage } from 'pages/Room';
 import { useLayoutEffect, useRef } from 'react';
-import MessageItem from '../MessageItem';
+import MessageItem from './MessageItem';
 import MessageSkeleton from './MessageSkeleton';
 
 interface IChat {
