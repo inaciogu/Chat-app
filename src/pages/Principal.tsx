@@ -10,6 +10,7 @@ import {
 } from '@mui/material';
 import useAccount from 'hooks/useAccount';
 
+import getRoomIcons from 'utils/room';
 import manInComputer from '../assets/manInComputer.jpg';
 
 interface ILoginInputs {
@@ -114,6 +115,8 @@ export default function Principal() {
             >
               {rooms.map((item) => (
                 <MenuItem key={item._id} value={item._id}>
+                  {getRoomIcons(item.name)}
+                  {' '}
                   {item.name}
                 </MenuItem>
               ))}
