@@ -1,11 +1,8 @@
-import {
-  MouseEvent,
-  useState,
-} from 'react';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 import * as yup from 'yup';
-import { useForm } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
@@ -33,25 +30,31 @@ const schema = yup.object({
 });
 
 export default function Principal() {
-  const { handleUsername, socket, rooms } = useAccount();
-  const navigate = useNavigate();
   const {
-    handleSubmit, register,
+    socket, rooms, login,
+  } = useAccount();
+  const navigate = useNavigate();
+
+  const [room, setRoom] = useState<string>('');
+
+  const {
+    handleSubmit,
+    control,
     formState: { errors },
   } = useForm<ILoginInputs>({ resolver: yupResolver(schema) });
 
-  const [room, setRoom] = useState<string>('');
-  const [username, setUsername] = useState<string>('');
-
-  const joinRoom = (event: MouseEvent) => {
-    event.preventDefault();
-    if (username !== '' && room !== '') {
-      socket.emit('join_room', room);
-      handleUsername(username);
-      navigate(`/room/${room}`);
-      if (socket.disconnected) {
-        socket.connect();
+  const onSubmit: SubmitHandler<ILoginInputs> = async (data) => {
+    try {
+      await login(data);
+      if (room !== '') {
+        socket.emit('join_room', room);
+        navigate(`/room/${room}`);
+        if (socket.disconnected) {
+          socket.connect();
+        }
       }
+    } catch (error: any) {
+      console.log('Erro');
     }
   };
 
@@ -72,21 +75,50 @@ export default function Principal() {
           display: 'flex', flexDirection: 'column', alignItems: 'center', width: '90%', p: 5, boxShadow: 5,
         }}
         >
-          <Stack width="100%" height="100%" p={2} justifyContent="center" alignItems="center" component="form" spacing={5}>
-            <Typography textAlign="center" variant="h4">
-              Select a room to join
-            </Typography>
-            <TextField onChange={(event) => setUsername(event.target.value)} label="Enter your username" fullWidth />
-            <TextField value={room} select onChange={(event) => setRoom(event.target.value)} label="Select a room" fullWidth>
+          <Stack component="form" onSubmit={handleSubmit(onSubmit)} width="100%" height="100%" p={2} justifyContent="center" alignItems="center" spacing={5}>
+            <Controller
+              name="email"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  label="enter email"
+                  fullWidth
+                  {...field}
+                  error={!!errors.email}
+                  helperText={errors.email?.message}
+                />
+              )}
+            />
+            <Controller
+              name="password"
+              control={control}
+              defaultValue=""
+              render={({ field }) => (
+                <TextField
+                  label="enter password"
+                  type="password"
+                  fullWidth
+                  {...field}
+                  error={!!errors.password}
+                  helperText={errors.password?.message}
+                />
+              )}
+            />
+            <TextField
+              value={room}
+              select
+              onChange={(event) => setRoom(event.target.value)}
+              label="Select a room"
+              fullWidth
+            >
               {rooms.map((item) => (
                 <MenuItem key={item._id} value={item._id}>
                   {item.name}
                 </MenuItem>
               ))}
             </TextField>
-            <Button onClick={(event) => joinRoom(event)} type="submit" variant="contained" sx={{ width: '50%' }}>
-              join
-            </Button>
+            <Button variant="contained" type="submit">Login</Button>
           </Stack>
         </Card>
       </Box>
