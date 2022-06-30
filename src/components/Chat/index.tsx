@@ -5,7 +5,7 @@ import MessageItem from '../MessageItem';
 import MessageSkeleton from './MessageSkeleton';
 
 interface IChat {
-  username: string;
+  username: string | undefined;
   messages: IMessage[];
   loading: boolean;
 }

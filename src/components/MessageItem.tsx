@@ -3,8 +3,8 @@ import {
 } from '@mui/material';
 
 interface IMessageItem {
-  username: string;
-  author: string;
+  username: string | undefined;
+  author: string | undefined;
   message: string;
   time: string;
 }
