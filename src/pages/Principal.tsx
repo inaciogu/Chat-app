@@ -106,7 +106,7 @@ export default function Principal() {
         component="img"
         src={chatBackground}
         borderRadius={2}
-        boxShadow={2}
+        boxShadow={5}
         width="50%"
         height="100%"
       />
