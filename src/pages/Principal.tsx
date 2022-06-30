@@ -1,14 +1,24 @@
 import {
-  Box, Button, Card, MenuItem, Stack, styled, TextField, Typography,
-} from '@mui/material';
-import useAccount from 'hooks/useAccount';
-import {
   MouseEvent,
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
 
+import * as yup from 'yup';
+import { useForm } from 'react-hook-form';
+import { yupResolver } from '@hookform/resolvers/yup';
+
+import {
+  Box, Button, Card, MenuItem, Stack, styled, TextField, Typography,
+} from '@mui/material';
+import useAccount from 'hooks/useAccount';
+
 import manInComputer from '../assets/manInComputer.jpg';
+
+interface ILoginInputs {
+  email: string;
+  password: string;
+}
 
 export const RootStyle = styled('main')(() => ({
   height: '100%',
@@ -17,9 +27,18 @@ export const RootStyle = styled('main')(() => ({
   justifyContent: 'center',
 }));
 
+const schema = yup.object({
+  email: yup.string().email().required(),
+  password: yup.string().required(),
+});
+
 export default function Principal() {
   const { handleUsername, socket, rooms } = useAccount();
   const navigate = useNavigate();
+  const {
+    handleSubmit, register,
+    formState: { errors },
+  } = useForm<ILoginInputs>({ resolver: yupResolver(schema) });
 
   const [room, setRoom] = useState<string>('');
   const [username, setUsername] = useState<string>('');
