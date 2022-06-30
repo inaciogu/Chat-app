@@ -6,6 +6,7 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
+  Alert,
   Box, Button, Card, MenuItem, Stack, styled, TextField, Typography,
 } from '@mui/material';
 import useAccount from 'hooks/useAccount';
@@ -34,7 +35,7 @@ export default function Principal() {
   const { login } = useAccount();
 
   const [open, setOpen] = useState<boolean>(false);
-  const [authError, setAuthError] = useState<string>('');
+  const [authError, setAuthError] = useState<string | undefined>();
 
   const {
     handleSubmit,
@@ -100,6 +101,7 @@ export default function Principal() {
                 />
               )}
             />
+            {authError && <Alert sx={{ width: '100%' }} severity="warning">{authError}</Alert>}
             <Button variant="contained" type="submit">Login</Button>
             <RoomSelection open={open} onClose={() => setOpen(false)} />
           </Stack>
