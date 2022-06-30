@@ -10,7 +10,7 @@ import {
 } from '@mui/material';
 import useAccount from 'hooks/useAccount';
 
-import getRoomIcons from 'utils/room';
+import RoomSelection from 'components/RoomSelection';
 import manInComputer from '../assets/manInComputer.jpg';
 
 interface ILoginInputs {
@@ -31,12 +31,9 @@ const schema = yup.object({
 });
 
 export default function Principal() {
-  const {
-    socket, rooms, login,
-  } = useAccount();
-  const navigate = useNavigate();
+  const { login } = useAccount();
 
-  const [room, setRoom] = useState<string>('');
+  const [open, setOpen] = useState<boolean>(false);
 
   const {
     handleSubmit,
@@ -47,13 +44,7 @@ export default function Principal() {
   const onSubmit: SubmitHandler<ILoginInputs> = async (data) => {
     try {
       await login(data);
-      if (room !== '') {
-        socket.emit('join_room', room);
-        navigate(`/room/${room}`);
-        if (socket.disconnected) {
-          socket.connect();
-        }
-      }
+      setOpen(true);
     } catch (error: any) {
       console.log('Erro');
     }
@@ -106,22 +97,8 @@ export default function Principal() {
                 />
               )}
             />
-            <TextField
-              value={room}
-              select
-              onChange={(event) => setRoom(event.target.value)}
-              label="Select a room"
-              fullWidth
-            >
-              {rooms.map((item) => (
-                <MenuItem key={item._id} value={item._id}>
-                  {getRoomIcons(item.name)}
-                  {' '}
-                  {item.name}
-                </MenuItem>
-              ))}
-            </TextField>
             <Button variant="contained" type="submit">Login</Button>
+            <RoomSelection open={open} onClose={() => setOpen(false)} />
           </Stack>
         </Card>
       </Box>
