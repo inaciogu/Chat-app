@@ -13,6 +13,7 @@ import useAccount from 'hooks/useAccount';
 
 import RoomSelection from 'components/RoomSelection';
 import manInComputer from '../assets/manInComputer.jpg';
+import chatBackground from '../assets/chat_background.svg';
 
 interface ILoginInputs {
   email: string;
@@ -103,7 +104,9 @@ export default function Principal() {
           { xs: 'none', md: 'inherit' }
         }
         component="img"
-        src={manInComputer}
+        src={chatBackground}
+        borderRadius={2}
+        boxShadow={2}
         width="50%"
         height="100%"
       />
