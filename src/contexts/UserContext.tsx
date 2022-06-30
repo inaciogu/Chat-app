@@ -63,7 +63,7 @@ const authReducer = (state: TAuthState, action: TAuthAction) => {
   }
 };
 
-export const userContext = createContext({} as TUserContext);
+export const UserContext = createContext({} as TUserContext);
 
 const socket = io.connect(process.env.REACT_APP_API_URL || '', { reconnection: true, transports: ['websocket'] });
 
@@ -156,11 +156,11 @@ export default function UserProvider({ children }: IUserProvider) {
   }, []);
 
   return (
-    <userContext.Provider value={{
+    <UserContext.Provider value={{
       handleUsername, ...state, username, socket, rooms, login, logout, handleUser,
     }}
     >
       {children}
-    </userContext.Provider>
+    </UserContext.Provider>
   );
 }
