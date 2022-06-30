@@ -34,6 +34,7 @@ export default function Principal() {
   const { login } = useAccount();
 
   const [open, setOpen] = useState<boolean>(false);
+  const [authError, setAuthError] = useState<string>('');
 
   const {
     handleSubmit,
@@ -46,7 +47,9 @@ export default function Principal() {
       await login(data);
       setOpen(true);
     } catch (error: any) {
-      console.log('Erro');
+      console.log(error.response.data.message);
+      setAuthError(error.response.data.message);
+      setOpen(false);
     }
   };
 
