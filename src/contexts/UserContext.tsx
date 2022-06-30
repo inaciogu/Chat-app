@@ -153,7 +153,7 @@ export default function UserProvider({ children }: IUserProvider) {
       }
     };
     initialization();
-  });
+  }, []);
 
   return (
     <userContext.Provider value={{

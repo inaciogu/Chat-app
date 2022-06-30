@@ -9,7 +9,7 @@ export enum EActionTypes {
 }
 
 export type TAuthAction = {
-  type: EActionTypes;
+  type: EActionTypes.Initial | EActionTypes.Login | EActionTypes.Logout;
   payload: {
     isAuthenticated: boolean;
     user: TUser
