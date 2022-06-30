@@ -56,19 +56,10 @@ export default function Principal() {
 
   return (
     <RootStyle>
-      <Box
-        display={
-          { xs: 'none', md: 'inherit' }
-        }
-        component="img"
-        src={manInComputer}
-        width="50%"
-        height="100%"
-      />
-      <Box display="flex" alignItems="center" flexDirection="column" justifyContent="center" width="100%">
+      <Stack width="100%" alignItems="center" spacing={5}>
         <Typography textAlign="center" variant="h3">Welcome to the chatapp</Typography>
         <Card sx={{
-          display: 'flex', flexDirection: 'column', alignItems: 'center', width: '90%', p: 5, boxShadow: 5,
+          display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', p: 3, boxShadow: 5,
         }}
         >
           <Stack component="form" onSubmit={handleSubmit(onSubmit)} width="100%" height="100%" p={2} justifyContent="center" alignItems="center" spacing={5}>
@@ -78,7 +69,7 @@ export default function Principal() {
               defaultValue=""
               render={({ field }) => (
                 <TextField
-                  label="enter email"
+                  label="Email"
                   fullWidth
                   {...field}
                   error={!!errors.email}
@@ -92,7 +83,7 @@ export default function Principal() {
               defaultValue=""
               render={({ field }) => (
                 <TextField
-                  label="enter password"
+                  label="Password"
                   type="password"
                   fullWidth
                   {...field}
@@ -106,7 +97,16 @@ export default function Principal() {
             <RoomSelection open={open} onClose={() => setOpen(false)} />
           </Stack>
         </Card>
-      </Box>
+      </Stack>
+      <Box
+        display={
+          { xs: 'none', md: 'inherit' }
+        }
+        component="img"
+        src={manInComputer}
+        width="50%"
+        height="100%"
+      />
     </RootStyle>
   );
 }
