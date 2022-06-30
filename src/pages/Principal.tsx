@@ -102,7 +102,7 @@ export default function Principal() {
               )}
             />
             {authError && <Alert sx={{ width: '100%' }} severity="warning">{authError}</Alert>}
-            <Button variant="contained" type="submit">Login</Button>
+            <Button variant="contained" type="submit" sx={{ width: '60%' }}>Login</Button>
             <RoomSelection open={open} onClose={() => setOpen(false)} />
           </Stack>
         </Card>
