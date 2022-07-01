@@ -31,7 +31,7 @@ export const RootStyle = styled('main')(() => ({
 
 const schema = yup.object({
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  password: yup.string().min(5).required(),
 });
 
 export default function Principal() {

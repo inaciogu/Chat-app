@@ -23,10 +23,10 @@ interface IRegisterInputs {
 }
 
 const schema = yup.object({
-  name: yup.string().required(),
-  username: yup.string().required(),
+  name: yup.string().min(5).required(),
+  username: yup.string().min(4).required(),
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  password: yup.string().min(5).required(),
 });
 
 export default function Registration() {
