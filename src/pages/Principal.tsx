@@ -12,6 +12,7 @@ import {
 import useAccount from 'hooks/useAccount';
 
 import RoomSelection from 'components/RoomSelection';
+import useToast from 'hooks/useToast';
 import manInComputer from '../assets/manInComputer.jpg';
 import chatBackground from '../assets/chat_background.svg';
 
@@ -34,6 +35,7 @@ const schema = yup.object({
 
 export default function Principal() {
   const { login } = useAccount();
+  const { enqueueToast } = useToast();
 
   const [open, setOpen] = useState<boolean>(false);
   const [authError, setAuthError] = useState<string | undefined>();
@@ -47,6 +49,7 @@ export default function Principal() {
   const onSubmit: SubmitHandler<ILoginInputs> = async (data) => {
     try {
       await login(data);
+      enqueueToast('Login Successfully', 'success');
       setOpen(true);
     } catch (error: any) {
       console.log(error.response.data.message);
