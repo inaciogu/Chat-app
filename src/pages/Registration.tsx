@@ -6,6 +6,7 @@ import {
   Alert,
   Box, Button, Link, Stack, TextField, Typography,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import useAccount from 'hooks/useAccount';
 import RoomSelection from 'components/RoomSelection';
@@ -22,10 +23,10 @@ interface IRegisterInputs {
 }
 
 const schema = yup.object({
-  name: yup.string().required(),
-  username: yup.string().required(),
+  name: yup.string().min(5).required(),
+  username: yup.string().min(4).required(),
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  password: yup.string().min(5).required(),
 });
 
 export default function Registration() {
@@ -36,7 +37,7 @@ export default function Registration() {
 
   const {
     handleSubmit,
-    formState: { errors }, control,
+    formState: { errors, isSubmitting }, control,
   } = useForm<IRegisterInputs>({ resolver: yupResolver(schema) });
 
   const onSubmit: SubmitHandler<IRegisterInputs> = async (data) => {
@@ -89,7 +90,7 @@ export default function Registration() {
         {authError && (
           <Alert severity="warning" sx={{ width: '100%' }}>{authError}</Alert>
         )}
-        <Button variant="contained" type="submit" sx={{ width: '60%' }}>Register</Button>
+        <LoadingButton loading={isSubmitting} variant="contained" type="submit" sx={{ width: '60%' }}>Register</LoadingButton>
         <Link component={RouterLink} to="/" underline="none" fontWeight="bold" alignSelf="flex-start" display="flex" alignItems="center">
           <ArrowBack />
           {' '}

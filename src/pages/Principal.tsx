@@ -9,6 +9,7 @@ import {
   Alert,
   Box, Button, Card, Link, MenuItem, Stack, styled, TextField, Typography,
 } from '@mui/material';
+import { LoadingButton } from '@mui/lab';
 import useAccount from 'hooks/useAccount';
 
 import RoomSelection from 'components/RoomSelection';
@@ -30,7 +31,7 @@ export const RootStyle = styled('main')(() => ({
 
 const schema = yup.object({
   email: yup.string().email().required(),
-  password: yup.string().required(),
+  password: yup.string().min(5).required(),
 });
 
 export default function Principal() {
@@ -42,7 +43,7 @@ export default function Principal() {
   const {
     handleSubmit,
     control,
-    formState: { errors },
+    formState: { errors, isSubmitting },
   } = useForm<ILoginInputs>({ resolver: yupResolver(schema) });
 
   const onSubmit: SubmitHandler<ILoginInputs> = async (data) => {
@@ -95,7 +96,7 @@ export default function Principal() {
               )}
             />
             {authError && <Alert sx={{ width: '100%' }} severity="warning">{authError}</Alert>}
-            <Button variant="contained" type="submit" sx={{ width: '60%' }}>Login</Button>
+            <LoadingButton loading={isSubmitting} variant="contained" type="submit" sx={{ width: '60%' }}>Login</LoadingButton>
             <Box display="flex" alignItems="center">
               <Typography mr={1}>Not registred yet?</Typography>
               <Link component={RouterLink} to="/registration" underline="none" fontWeight="bold">Create an account</Link>
