@@ -49,8 +49,9 @@ export default function Registration() {
 
   return (
     <RootStyle>
-      <Stack component="form" onSubmit={handleSubmit(onSubmit)} width="100%" height="100%" spacing={4} justifyContent="center" alignItems="center" padding={3}>
+      <Stack component="form" onSubmit={handleSubmit(onSubmit)} width="100%" height="100%" spacing={4} justifyContent="center" alignItems="center" padding={4}>
         <Typography alignSelf="flex-start" variant="h4">Create an Account</Typography>
+        <Typography alignSelf="flex-start" variant="caption">It is easy! Enter your credentials and talk to your friends in anywhere.</Typography>
         <Controller
           name="name"
           control={control}
