@@ -59,6 +59,7 @@ export default function Principal() {
     <RootStyle>
       <Stack width="100%" alignItems="center" spacing={5}>
         <Typography textAlign="center" variant="h3">Welcome to the chatapp</Typography>
+        <Typography variant="subtitle2">A web app where you can chat with anyone anywhere!</Typography>
         <Card sx={{
           display: 'flex', flexDirection: 'column', alignItems: 'center', width: '80%', p: 3, boxShadow: 5,
         }}
