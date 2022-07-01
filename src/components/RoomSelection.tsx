@@ -8,10 +8,9 @@ import getRoomIcons from 'utils/room';
 
 interface IRoomSelection {
   open: boolean;
-  onClose: () => void;
 }
 
-export default function RoomSelection({ open, onClose }: IRoomSelection) {
+export default function RoomSelection({ open }: IRoomSelection) {
   const { rooms, socket } = useAccount();
   const navigate = useNavigate();
 
@@ -24,7 +23,7 @@ export default function RoomSelection({ open, onClose }: IRoomSelection) {
   };
 
   return (
-    <Dialog open={open} onClose={onClose}>
+    <Dialog open={open}>
       <DialogTitle>Select a room to join</DialogTitle>
       <Card sx={{ py: 2 }}>
         <Stack alignItems="center">

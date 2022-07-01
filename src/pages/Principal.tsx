@@ -34,10 +34,9 @@ const schema = yup.object({
 });
 
 export default function Principal() {
-  const { login } = useAccount();
+  const { login, isAuthenticated } = useAccount();
   const { enqueueToast } = useToast();
 
-  const [open, setOpen] = useState<boolean>(false);
   const [authError, setAuthError] = useState<string | undefined>();
 
   const {
@@ -50,11 +49,9 @@ export default function Principal() {
     try {
       await login(data);
       enqueueToast('Login Successfully', 'success');
-      setOpen(true);
     } catch (error: any) {
       console.log(error.response.data.message);
       setAuthError(error.response.data.message);
-      setOpen(false);
     }
   };
 
@@ -116,7 +113,7 @@ export default function Principal() {
         width="50%"
         height="100%"
       />
-      <RoomSelection open={open} onClose={() => setOpen(false)} />
+      <RoomSelection open={isAuthenticated} />
     </RootStyle>
   );
 }

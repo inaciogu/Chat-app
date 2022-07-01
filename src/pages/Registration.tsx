@@ -29,10 +29,9 @@ const schema = yup.object({
 });
 
 export default function Registration() {
-  const { registration } = useAccount();
+  const { registration, isAuthenticated } = useAccount();
   const { enqueueToast } = useToast();
 
-  const [open, setOpen] = useState<boolean>(false);
   const [authError, setAuthError] = useState<string | undefined>();
 
   const {
@@ -44,10 +43,8 @@ export default function Registration() {
     try {
       await registration(data);
       enqueueToast('user registered successfully', 'success');
-      setOpen(true);
     } catch (error: any) {
       console.log(error.response.data.message);
-      setOpen(false);
       setAuthError(error.response.data.message);
     }
   };
@@ -110,7 +107,7 @@ export default function Registration() {
         width="50%"
         height="100%"
       />
-      <RoomSelection open={open} onClose={() => setOpen(false)} />
+      <RoomSelection open={isAuthenticated} />
     </RootStyle>
   );
 }
