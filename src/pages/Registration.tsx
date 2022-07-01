@@ -7,6 +7,7 @@ import {
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import useAccount from 'hooks/useAccount';
 import { useState } from 'react';
+import RoomSelection from 'components/RoomSelection';
 import { RootStyle } from './Principal';
 import registerBackground from '../assets/register_background.svg';
 
@@ -27,6 +28,7 @@ const schema = yup.object({
 export default function Registration() {
   const { registration } = useAccount();
 
+  const [open, setOpen] = useState<boolean>(false);
   const [authError, setAuthError] = useState<string | undefined>();
 
   const {
@@ -37,8 +39,10 @@ export default function Registration() {
   const onSubmit: SubmitHandler<IRegisterInputs> = async (data) => {
     try {
       await registration(data);
+      setOpen(true);
     } catch (error: any) {
       console.log(error.response.data.message);
+      setOpen(false);
       setAuthError(error.response.data.message);
     }
   };
@@ -76,13 +80,14 @@ export default function Registration() {
           control={control}
           defaultValue=""
           render={({ field }) => (
-            <TextField {...field} fullWidth label="password" error={!!errors.password} helperText={errors.password?.message} />
+            <TextField type="password" {...field} fullWidth label="password" error={!!errors.password} helperText={errors.password?.message} />
           )}
         />
         {authError && (
           <Alert severity="warning" sx={{ width: '100%' }}>{authError}</Alert>
         )}
         <Button variant="contained" type="submit" sx={{ width: '60%' }}>Register</Button>
+        <RoomSelection open={open} onClose={() => setOpen(false)} />
       </Stack>
       <Box
         display={
