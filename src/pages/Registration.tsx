@@ -1,13 +1,15 @@
+import { useState } from 'react';
+import { Link as RouterLink } from 'react-router-dom';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
   Alert,
-  Box, Button, Stack, TextField, Typography,
+  Box, Button, Link, Stack, TextField, Typography,
 } from '@mui/material';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import useAccount from 'hooks/useAccount';
-import { useState } from 'react';
 import RoomSelection from 'components/RoomSelection';
+import { ArrowBack } from '@mui/icons-material';
 import { RootStyle } from './Principal';
 import registerBackground from '../assets/register_background.svg';
 
@@ -88,6 +90,11 @@ export default function Registration() {
           <Alert severity="warning" sx={{ width: '100%' }}>{authError}</Alert>
         )}
         <Button variant="contained" type="submit" sx={{ width: '60%' }}>Register</Button>
+        <Link component={RouterLink} to="/" underline="none" fontWeight="bold" alignSelf="flex-start" display="flex" alignItems="center">
+          <ArrowBack />
+          {' '}
+          Back to login
+        </Link>
       </Stack>
       <Box
         display={

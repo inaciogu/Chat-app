@@ -97,7 +97,7 @@ export default function Principal() {
             <Button variant="contained" type="submit" sx={{ width: '60%' }}>Login</Button>
             <Box display="flex" alignItems="center">
               <Typography mr={1}>Not registred yet?</Typography>
-              <Link component={RouterLink} to="/registration" underline="none">Create an account</Link>
+              <Link component={RouterLink} to="/registration" underline="none" fontWeight="bold">Create an account</Link>
             </Box>
           </Stack>
         </Card>
