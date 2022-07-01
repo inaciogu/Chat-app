@@ -1,7 +1,10 @@
 import {
   createContext, ReactNode, useEffect, useReducer, useState,
 } from 'react';
-import { LOGIN, TUserLogin, TUserResponse } from 'services/auth.service';
+import {
+  LOGIN,
+  REGISTER, TUserLogin, TUserRegister, TUserResponse,
+} from 'services/auth.service';
 import { GET_ROOMS } from 'services/rooms.service';
 import * as io from 'socket.io-client';
 import isValidToken from 'utils/jwt';
@@ -23,6 +26,7 @@ type TUserContext = {
   socket: io.Socket;
   handleUsername: (username: string) => void;
   login: (body: TUserLogin) => void;
+  registration: (body: TUserRegister) => void;
   logout: () => void;
   handleUser: (currentUser: TUser) => void;
   rooms: IRoom[]
@@ -86,6 +90,14 @@ export default function UserProvider({ children }: IUserProvider) {
     });
 
     localStorage.setItem('user', JSON.stringify(currentUser));
+  };
+
+  const registration = async (body: TUserRegister) => {
+    const { data } = await REGISTER(body);
+    const { user, token } = data;
+
+    handleUser(user);
+    localStorage.setItem('token', JSON.stringify(token));
   };
 
   const login = async (body: TUserLogin) => {
@@ -157,7 +169,7 @@ export default function UserProvider({ children }: IUserProvider) {
 
   return (
     <UserContext.Provider value={{
-      handleUsername, ...state, username, socket, rooms, login, logout, handleUser,
+      handleUsername, ...state, username, socket, rooms, login, registration, logout, handleUser,
     }}
     >
       {children}

@@ -3,7 +3,8 @@ import * as yup from 'yup';
 import {
   Box, Stack, TextField, Typography,
 } from '@mui/material';
-import { useForm, Controller } from 'react-hook-form';
+import { useForm, Controller, SubmitHandler } from 'react-hook-form';
+import useAccount from 'hooks/useAccount';
 import { RootStyle } from './Principal';
 import registerBackground from '../assets/register_background.svg';
 
@@ -22,14 +23,24 @@ const schema = yup.object({
 });
 
 export default function Registration() {
+  const { registration } = useAccount();
+
   const {
     handleSubmit,
     formState: { errors }, control,
   } = useForm<IRegisterInputs>({ resolver: yupResolver(schema) });
 
+  const onSubmit: SubmitHandler<IRegisterInputs> = async (data) => {
+    try {
+      await registration(data);
+    } catch (error: any) {
+      console.log(error.response.data.message);
+    }
+  };
+
   return (
     <RootStyle>
-      <Stack component="form" spacing={2}>
+      <Stack component="form" onSubmit={() => handleSubmit(onSubmit)} width="100%" height="100%" spacing={2}>
         <Typography variant="h4">Create an Account</Typography>
         <Controller
           name="name"
