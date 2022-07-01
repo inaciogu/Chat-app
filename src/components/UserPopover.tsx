@@ -4,11 +4,13 @@ import {
   ListItemIcon,
 } from '@mui/material';
 import useAccount from 'hooks/useAccount';
+import useToast from 'hooks/useToast';
 import { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserPopover() {
   const { user, socket, logout } = useAccount();
+  const { enqueueToast } = useToast();
   const navigate = useNavigate();
 
   const anchorRef = useRef(null);
@@ -19,6 +21,7 @@ export default function UserPopover() {
 
   const disconnectUser = () => {
     logout();
+    enqueueToast('session ended successfully', 'success');
     socket.disconnect();
     navigate('/', { replace: true });
   };
