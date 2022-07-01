@@ -10,7 +10,6 @@ import {
   Box,
   Divider,
   Stack,
-  Container,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -24,11 +23,9 @@ import {
   DarkMode,
   LightMode,
   SendSharp,
-  Settings,
 } from '@mui/icons-material';
 import { ThemeContext } from 'contexts/ThemeContext';
 import RoomItem from 'components/RoomItem';
-import UserPopover from 'components/UserPopover';
 import useAccount from 'hooks/useAccount';
 import NavBar from 'components/NavBar';
 import { GET_ONE_ROOM } from 'services/rooms.service';
@@ -37,7 +34,7 @@ import { GET_MESSAGES, NEW_MESSAGE } from 'services/messages.service';
 
 export interface IMessage {
   room: string | undefined;
-  author: string;
+  author: string | undefined;
   time: string;
   message: string;
 }
@@ -52,7 +49,7 @@ const RoomStyle = styled('section')(() => ({
 }));
 
 export default function Room() {
-  const { username, socket, rooms } = useAccount();
+  const { user, socket, rooms } = useAccount();
   const { setThemeMode } = useContext(ThemeContext);
   const { id } = useParams();
   const navigate = useNavigate();
@@ -68,7 +65,7 @@ export default function Room() {
       const messageData = {
         room: id || '',
         message: currentMessage,
-        author: username,
+        author: user?.username,
         time: format(CURRENT_DATE, 'HH:mm'),
       };
       socket.emit('send_message', messageData);
@@ -134,7 +131,7 @@ export default function Room() {
     <RoomStyle>
       <NavBar loading={loading} id={currentRoom.name} onClick={() => setOpen(true)} />
       <Stack height="100%" p={2}>
-        <Chat username={username} loading={loading} messages={messages} />
+        <Chat username={user?.username} loading={loading} messages={messages} />
         <TextField
           inputProps={{
             onKeyDown: (event) => {
