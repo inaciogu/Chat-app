@@ -88,7 +88,6 @@ export default function Registration() {
           <Alert severity="warning" sx={{ width: '100%' }}>{authError}</Alert>
         )}
         <Button variant="contained" type="submit" sx={{ width: '60%' }}>Register</Button>
-        <RoomSelection open={open} onClose={() => setOpen(false)} />
       </Stack>
       <Box
         display={
@@ -101,6 +100,7 @@ export default function Registration() {
         width="50%"
         height="100%"
       />
+      <RoomSelection open={open} onClose={() => setOpen(false)} />
     </RootStyle>
   );
 }
