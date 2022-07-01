@@ -8,7 +8,7 @@ import { useLayoutEffect, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 
 export default function UserPopover() {
-  const { user, socket } = useAccount();
+  const { user, socket, logout } = useAccount();
   const navigate = useNavigate();
 
   const anchorRef = useRef(null);
@@ -17,7 +17,8 @@ export default function UserPopover() {
   const [open, setOpen] = useState<boolean>(false);
   const [variant, setVariant] = useState<any>('circular');
 
-  const logout = () => {
+  const disconnectUser = () => {
+    logout();
     socket.disconnect();
     navigate('/', { replace: true });
   };
@@ -44,7 +45,7 @@ export default function UserPopover() {
       <Popover anchorOrigin={{ vertical: 'bottom', horizontal: 'left' }} anchorEl={anchorRef?.current} open={open} onClose={() => setOpen(false)}>
         <Card>
           <List>
-            <ListItemButton onClick={() => logout()}>
+            <ListItemButton onClick={() => disconnectUser()}>
               <ListItemIcon>
                 <LogoutIcon />
               </ListItemIcon>

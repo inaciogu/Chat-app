@@ -117,6 +117,8 @@ export default function UserProvider({ children }: IUserProvider) {
         user: null,
       },
     });
+    localStorage.removeItem('user');
+    localStorage.removeItem('token');
   };
 
   const getStoredUser = () => {
