@@ -10,6 +10,7 @@ import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import useAccount from 'hooks/useAccount';
 import RoomSelection from 'components/RoomSelection';
 import { ArrowBack } from '@mui/icons-material';
+import useToast from 'hooks/useToast';
 import { RootStyle } from './Principal';
 import registerBackground from '../assets/register_background.svg';
 
@@ -29,6 +30,7 @@ const schema = yup.object({
 
 export default function Registration() {
   const { registration } = useAccount();
+  const { enqueueToast } = useToast();
 
   const [open, setOpen] = useState<boolean>(false);
   const [authError, setAuthError] = useState<string | undefined>();
@@ -41,6 +43,7 @@ export default function Registration() {
   const onSubmit: SubmitHandler<IRegisterInputs> = async (data) => {
     try {
       await registration(data);
+      enqueueToast('user registered successfully', 'success');
       setOpen(true);
     } catch (error: any) {
       console.log(error.response.data.message);
