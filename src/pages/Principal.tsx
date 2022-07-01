@@ -7,7 +7,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 
 import {
   Alert,
-  Box, Button, Card, MenuItem, Stack, styled, TextField, Typography,
+  Box, Button, Card, Link, MenuItem, Stack, styled, TextField, Typography,
 } from '@mui/material';
 import useAccount from 'hooks/useAccount';
 
@@ -95,7 +95,10 @@ export default function Principal() {
             />
             {authError && <Alert sx={{ width: '100%' }} severity="warning">{authError}</Alert>}
             <Button variant="contained" type="submit" sx={{ width: '60%' }}>Login</Button>
-            <RoomSelection open={open} onClose={() => setOpen(false)} />
+            <Box display="flex" alignItems="center">
+              <Typography mr={1}>Not registred yet?</Typography>
+              <Link href="/registration" sx={{ fontWeight: 'bold', textDecoration: 'none' }}>Create an account</Link>
+            </Box>
           </Stack>
         </Card>
       </Stack>
@@ -110,6 +113,7 @@ export default function Principal() {
         width="50%"
         height="100%"
       />
+      <RoomSelection open={open} onClose={() => setOpen(false)} />
     </RootStyle>
   );
 }
