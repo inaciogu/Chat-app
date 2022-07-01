@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { Link as RouterLink } from 'react-router-dom';
 
 import * as yup from 'yup';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
@@ -97,7 +97,7 @@ export default function Principal() {
             <Button variant="contained" type="submit" sx={{ width: '60%' }}>Login</Button>
             <Box display="flex" alignItems="center">
               <Typography mr={1}>Not registred yet?</Typography>
-              <Link href="/registration" sx={{ fontWeight: 'bold', textDecoration: 'none' }}>Create an account</Link>
+              <Link component={RouterLink} to="/registration" underline="none">Create an account</Link>
             </Box>
           </Stack>
         </Card>
