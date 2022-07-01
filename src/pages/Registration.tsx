@@ -1,10 +1,12 @@
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 import {
-  Box, Stack, TextField, Typography,
+  Alert,
+  Box, Button, Stack, TextField, Typography,
 } from '@mui/material';
 import { useForm, Controller, SubmitHandler } from 'react-hook-form';
 import useAccount from 'hooks/useAccount';
+import { useState } from 'react';
 import { RootStyle } from './Principal';
 import registerBackground from '../assets/register_background.svg';
 
@@ -18,12 +20,14 @@ interface IRegisterInputs {
 const schema = yup.object({
   name: yup.string().required(),
   username: yup.string().required(),
-  email: yup.string().email(),
+  email: yup.string().email().required(),
   password: yup.string().required(),
 });
 
 export default function Registration() {
   const { registration } = useAccount();
+
+  const [authError, setAuthError] = useState<string | undefined>();
 
   const {
     handleSubmit,
@@ -35,13 +39,14 @@ export default function Registration() {
       await registration(data);
     } catch (error: any) {
       console.log(error.response.data.message);
+      setAuthError(error.response.data.message);
     }
   };
 
   return (
     <RootStyle>
-      <Stack component="form" onSubmit={() => handleSubmit(onSubmit)} width="100%" height="100%" spacing={2}>
-        <Typography variant="h4">Create an Account</Typography>
+      <Stack component="form" onSubmit={handleSubmit(onSubmit)} width="100%" height="100%" spacing={4} justifyContent="center" alignItems="center" padding={3}>
+        <Typography alignSelf="flex-start" variant="h4">Create an Account</Typography>
         <Controller
           name="name"
           control={control}
@@ -74,6 +79,10 @@ export default function Registration() {
             <TextField {...field} fullWidth label="password" error={!!errors.password} helperText={errors.password?.message} />
           )}
         />
+        {authError && (
+          <Alert severity="warning" sx={{ width: '100%' }}>{authError}</Alert>
+        )}
+        <Button variant="contained" type="submit" sx={{ width: '60%' }}>Register</Button>
       </Stack>
       <Box
         display={
