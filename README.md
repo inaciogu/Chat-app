@@ -11,7 +11,7 @@
 
 ## Rodando localmente
    ### Observação:
-   <p>Para rodar obter a experiência completa localmente, você precisa clonar também o repositório da <a href="https://github.com/inaciogu/Chat-API">API</a> e instalar o <a href="https://www.mongodb.com/docs/manual/installation/">MongoDB</a> na sua máquina.</p>
+   <p>Para obter a experiência completa localmente, você precisa clonar também o repositório da <a href="https://github.com/inaciogu/Chat-API">API</a> e instalar o <a href="https://www.mongodb.com/docs/manual/installation/">MongoDB</a> na sua máquina.</p>
    
    ## Instruções:
   
