@@ -1,7 +1,8 @@
-# Chat app
+# Boas vindas ao repositório do Chat app
 
-## Sobre
   O chat app, como o nome já diz, é uma aplicação web de chat onde você pode se comunicar com outros usuários em tempo real! Nela o usuário pode criar uma conta, fazer o login e entrar em uma das salas para conversar com os outros usuários logados. A interface de usuário foi desenvolvida com React.js, Typescript, Material UI para estilização, socket.io-client para escutar e emitir eventos em tempo real, e react-hook-form juntamente com yup para implementação e validação de formulários.
+  
+  O deploy desta aplicação foi feito na Vercel, e pode ser acessado através deste <a href="https://chat-app-inaciogu.vercel.app/">Link</a>
 
 ## Tecnologias usadas
   - React.js
@@ -11,7 +12,7 @@
 
 ## Rodando localmente
    ### Observação:
-   <p>Para rodar obter a experiência completa localmente, você precisa clonar também o repositório da <a href="https://github.com/inaciogu/Chat-API">API</a> e instalar o <a href="https://www.mongodb.com/docs/manual/installation/">MongoDB</a> na sua máquina.</p>
+   <p>Para obter a experiência completa localmente, você precisa clonar também o repositório da <a href="https://github.com/inaciogu/Chat-API">API</a> e instalar o <a href="https://www.mongodb.com/docs/manual/installation/">MongoDB</a> na sua máquina.</p>
    
    ## Instruções:
   
