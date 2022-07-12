@@ -11,6 +11,10 @@ export default function Router() {
           element: <Principal />,
         },
         {
+          path: 'registration',
+          element: <Registration />,
+        },
+        {
           path: 'room/:id',
           element: <Room />,
         },
@@ -21,3 +25,4 @@ export default function Router() {
 
 const Principal = lazy(() => import('../pages/Principal'));
 const Room = lazy(() => import('../pages/Room'));
+const Registration = lazy(() => import('../pages/Registration'));

@@ -2,7 +2,7 @@ import api from './api';
 
 export type TMessage = {
   room: string;
-  author: string;
+  author: string | undefined;
   date: string;
   time: string;
   message: string;
