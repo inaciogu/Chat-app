@@ -5,7 +5,7 @@
   O deploy desta aplicação foi feito na Vercel, e pode ser acessado através deste <a href="https://chat-app-inaciogu.vercel.app/">Link</a>
 
 ## Tecnologias usadas
-  - React.js
+  - React.j
   - ContextAPI
   - MaterialUI
   - Socket.io-client
