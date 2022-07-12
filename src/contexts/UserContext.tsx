@@ -97,7 +97,7 @@ export default function UserProvider({ children }: IUserProvider) {
     const { user, token } = data;
 
     handleUser(user);
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('token', token);
   };
 
   const login = async (body: TUserLogin) => {
@@ -105,7 +105,7 @@ export default function UserProvider({ children }: IUserProvider) {
     const { user, token } = data;
 
     handleUser(user);
-    localStorage.setItem('token', JSON.stringify(token));
+    localStorage.setItem('token', token);
   };
 
   const logout = () => {
