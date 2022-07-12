@@ -1,15 +1,21 @@
 # Chat app
 
 ## Sobre
-  A aplicação consiste em um chat em tempo real feito em React.js, typescript, MaterialUI e socket.io. O Chat app consome uma API feita em Node.js com express, typescript, e socket.io-client para gerenciar os eventos em tempo real do chat.
+  O chat app, como o nome já diz, é uma aplicação web de chat onde você pode se comunicar com outros usuários em tempo real! Nela o usuário pode criar uma conta, fazer o login e entrar em uma das salas para conversar com os outros usuários logados. A interface de usuário foi desenvolvida com React.js, Typescript, Material UI para estilização, socket.io-client para escutar e emitir eventos em tempo real, e react-hook-form juntamente com yup para implementação e validação de formulários.
 
-## Tecnologias usadas:
+## Tecnologias usadas
   - React.js
   - ContextAPI
   - MaterialUI
   - Socket.io-client
 
-## Rodando localmente:
+## Rodando localmente
+   ### Observação:
+   <p>Para rodar obter a experiência completa localmente, você precisa clonar também o repositório da <a href="https://github.com/inaciogu/Chat-API">API</a> e instalar o <a href="https://www.mongodb.com/docs/manual/installation/">MongoDB</a> na sua máquina.</p>
+   
+   ## Instruções:
+  
   - Clone o repositório do projeto
   - Instale as dependencias com o comando `yarn`
-  - Inicialize o projeto com o comando `yarn start`
+  - Troque o nome do arquivo ".env.example" para ".env.local" e coloque o valor da variável para "http://localhost:3001"
+  - Rode o comando `yarn start` para iniciar a aplicação.
