@@ -30,6 +30,7 @@
         "react/jsx-no-constructed-context-values": "off",
         "react/no-array-index-key": 0,
         "react/jsx-no-duplicate-props": [1, { "ignoreCase": false }],
-        "no-underscore-dangle": "off"
+        "no-underscore-dangle": "off",
+        "no-console": "off"
     }
 }
