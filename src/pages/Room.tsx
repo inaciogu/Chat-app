@@ -10,6 +10,7 @@ import {
   Box,
   Divider,
   Stack,
+  useTheme,
 } from '@mui/material';
 
 import { format } from 'date-fns';
@@ -51,6 +52,7 @@ const RoomStyle = styled('section')(() => ({
 export default function Room() {
   const { user, socket, rooms } = useAccount();
   const { setThemeMode } = useContext(ThemeContext);
+  const { palette } = useTheme();
   const { id } = useParams();
   const navigate = useNavigate();
 
@@ -132,7 +134,7 @@ export default function Room() {
       <NavBar loading={loading} id={currentRoom.name} onClick={() => setOpen(true)} />
       <Stack height="91%">
         <Chat username={user?.username} loading={loading} messages={messages} />
-        <Box display="flex" alignSelf="center" width="95%" p={2} borderRadius={2} boxShadow={2} sx={{ background: '#272727' }}>
+        <Box display="flex" alignSelf="center" width="95%" p={2} borderRadius={2} boxShadow={2} sx={{ background: palette.mode === 'light' ? palette.grey[400] : palette.grey[900] }}>
           <TextField
             inputProps={{
               onKeyDown: (event) => {
