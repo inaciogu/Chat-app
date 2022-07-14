@@ -1,4 +1,5 @@
 import LoadingScreen from 'components/loadingScreen';
+import AuthGuard from 'guards/AuthGuard';
 import { lazy, Suspense } from 'react';
 import { useRoutes } from 'react-router-dom';
 
@@ -16,7 +17,11 @@ export default function Router() {
         },
         {
           path: 'room/:id',
-          element: <Room />,
+          element: (
+            <AuthGuard>
+              <Room />
+            </AuthGuard>
+          ),
         },
       ])}
     </Suspense>
