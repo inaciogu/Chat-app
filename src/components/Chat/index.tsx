@@ -20,12 +20,11 @@ export default function Chat({ messages, username, loading }: IChat) {
 
   return (
     <Stack
-      border="1px solid grey"
-      boxShadow={5}
       ref={chatBoxRef}
-      borderRadius={2}
-      p={3}
-      width="100%"
+      borderRadius="0 0 6px 6px"
+      p={2}
+      alignSelf="center"
+      width="95%"
       height="100%"
       sx={{
         overflowY: 'auto',

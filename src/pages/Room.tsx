@@ -130,29 +130,31 @@ export default function Room() {
   return (
     <RoomStyle>
       <NavBar loading={loading} id={currentRoom.name} onClick={() => setOpen(true)} />
-      <Stack height="100%" p={2}>
+      <Stack height="91%">
         <Chat username={user?.username} loading={loading} messages={messages} />
-        <TextField
-          inputProps={{
-            onKeyDown: (event) => {
-              if (event.code === 'Enter') {
-                event.preventDefault();
-                sendMessage();
-              }
-            },
-          }}
-          InputProps={{
-            endAdornment: (
-              <InputAdornment position="start">
-                <SendSharp color={currentMessage.trim() ? 'primary' : 'inherit'} onClick={() => sendMessage()} />
-              </InputAdornment>),
-          }}
-          label="Type something..."
-          multiline
-          onChange={(event) => setCurrentMessage(event.target.value)}
-          value={currentMessage}
-          sx={{ mt: 2 }}
-        />
+        <Box display="flex" alignSelf="center" width="95%" p={2} borderRadius={2} boxShadow={2} sx={{ background: '#272727' }}>
+          <TextField
+            inputProps={{
+              onKeyDown: (event) => {
+                if (event.code === 'Enter') {
+                  event.preventDefault();
+                  sendMessage();
+                }
+              },
+            }}
+            InputProps={{
+              endAdornment: (
+                <InputAdornment position="start">
+                  <SendSharp color={currentMessage.trim() ? 'primary' : 'inherit'} onClick={() => sendMessage()} />
+                </InputAdornment>),
+            }}
+            label="Type something..."
+            multiline
+            fullWidth
+            onChange={(event) => setCurrentMessage(event.target.value)}
+            value={currentMessage}
+          />
+        </Box>
       </Stack>
       <Drawer anchor="left" open={open} onClose={() => setOpen(false)}>
         <Box sx={{ p: 2, width: 250 }}>
