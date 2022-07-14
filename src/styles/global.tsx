@@ -1,7 +1,9 @@
 import React from 'react';
-import { GlobalStyles as GeneralStyles } from '@mui/material';
+import { GlobalStyles as GeneralStyles, useTheme } from '@mui/material';
 
 export default function GlobalStyles() {
+  const { palette } = useTheme();
+
   return (
     <GeneralStyles
       styles={{
@@ -18,7 +20,7 @@ export default function GlobalStyles() {
             borderRadius: 6,
           },
           '::-webkit-scrollbar-thumb': {
-            background: '#222',
+            background: palette.grey[800],
             borderRadius: 6,
           },
         },
